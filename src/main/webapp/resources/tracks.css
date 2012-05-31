@@ -1,0 +1,17 @@
+#loading {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 25px;
+	height: 25px;
+	text-align: center;
+	background-color: #202020;
+	top: 10px;
+	background-image: url("ajax-loader.gif");
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.leaflet-control-attribution {
+	display: none;
+}
