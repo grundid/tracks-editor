@@ -67,13 +67,45 @@ var map = new L.Map('map', {
 });
 
 var tilesUrl = 'http://tiles.osmsurround.org/{z}/{x}/{y}.png';
-var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-map.addLayer(new L.TileLayer(osmUrl, {
-	maxZoom : 17,
-	attribution : 'Map data &copy; OpenStreepMap contributors'
-}));
+
+var ocmLayer = new L.TileLayer(
+		'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+		{
+			maxZoom : 16,
+			attribution : 'Tiles created by <a href="http://www.gravitystorm.co.uk">Andy Allan</a> and Dave Stubbs, Map data &copy; <a href="http://www.openstreetmap.org">OpenStreepMap</a> contributors'
+		});
+
+var osmLayer = new L.TileLayer(
+		'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+		{
+			maxZoom : 18,
+			attribution : 'Map data &copy; <a href="http://www.openstreetmap.org">OpenStreepMap</a> contributors'
+		});
+
+var habLayer = new L.TileLayer(
+		'http://toolserver.org/tiles/hikebike/{z}/{x}/{y}.png',
+		{
+			maxZoom : 18,
+			attribution : 'Tiles created by <a href="http://hikebikemap.de/">Hike & Bike Map</a>, Map data &copy; <a href="http://www.openstreetmap.org">OpenStreepMap</a> contributors'
+		});
+
+var baseLayers = {
+	"OpenStreetMap" : osmLayer,
+	"Hike & Bike Map" : habLayer,
+	"OpenCycleMap" : ocmLayer
+};
+
+map.addLayer(osmLayer);
 
 var geojsonLayer = new L.GeoJSON();
+
+var overlayLayers = {
+	"Tracks" : geojsonLayer
+};
+
+map.addLayer(geojsonLayer);
+
+map.addControl(new L.Control.Layers(baseLayers, overlayLayers));
 
 geojsonLayer.on("featureparse", function(e) {
 	if (e.properties && e.properties.style && e.layer.setStyle) {
@@ -263,8 +295,9 @@ function uploadChanges() {
 }
 
 function downloadData() {
-	if (map.getZoom() < 1) {
-		showMessageBox("Please zoom in a little bit more to download data. Current zoom level ("+map.getZoom()+")");
+	if (map.getZoom() < 13) {
+		showMessageBox("Please zoom in a little bit more to download data. Current zoom level ("
+				+ map.getZoom() + ")");
 
 	} else {
 
@@ -282,6 +315,8 @@ function downloadData() {
 
 			params += "&withoutSurface=" + $('#withoutSurface:checked').val();
 			params += "&useOverpass=" + $('#useOverpass:checked').val();
+			params += "&allTracks=" + $('#allTracks:checked').val();
+			params += "&showBuildings=" + $('#showBuildings:checked').val();
 
 			$.ajax({
 				url : 'downloadData?' + params,
@@ -346,7 +381,7 @@ $.ajaxSetup({
 	}
 });
 
-map.addLayer(geojsonLayer);
+
 map.on("popupopen", function(clickEvent) {
 	var wayId = clickEvent.popup.options["wayId"];
 	var params = pendingWays[wayId];

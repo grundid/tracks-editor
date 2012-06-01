@@ -37,12 +37,15 @@ form {
 	text-align: center;
 	top: 10px;
 }
+
+.leaflet-control-layers-list input {
+	display: inline !important;
+}
 </style>
 
 <!-- Leaflet JavaScript -->
 <script src="rs/leaflet/leaflet-src.js"></script>
 <script src="rs/jquery-1.7.2.min.js"></script>
-<script src="rs/geojsondata.js"></script>
 <script src="rs/bootstrap/js/bootstrap.js"></script>
 </head>
 <body>
@@ -74,6 +77,10 @@ form {
 												value="true" id="useOverpass">&nbsp; Use Overpass API</label></a></li>
 									<li><a href="#"><label><input style="display: inline" type="checkbox" value="true"
 												id="withoutSurface">&nbsp;Show tracks without surface</label></a></li>
+									<li><a href="#"><label><input style="display: inline" type="checkbox" value="true"
+												id="allTracks">&nbsp;Show all tracks</label></a></li>
+									<li><a href="#"><label><input style="display: inline" type="checkbox" value="true"
+												id="showBuildings">&nbsp;Show buildings (experimental)</label></a></li>
 								</ul></li>
 
 						</ul>
@@ -130,7 +137,7 @@ form {
 		</div>
 	</div>
 	<div id="dialogContainer"></div>
-	<script src="rs/selective-editor.js"></script>
+	<script src="rs/tracks-editor.js"></script>
 	<script type="text/javascript">
 		updateOauth('${oauthTokens.token}', '${oauthTokens.tokenSecret}', '${osmUser.displayName}');
 	</script>

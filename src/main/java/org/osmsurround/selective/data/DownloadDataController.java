@@ -22,6 +22,8 @@ public class DownloadDataController {
 	Geometry get(BoundingBox boundingBox, SearchConfig searchConfig, HttpServletRequest request) throws Exception {
 		searchConfig.setUseOverpass(request.getParameter("useOverpass"));
 		searchConfig.setWithoutSurface(request.getParameter("withoutSurface"));
+		searchConfig.setAllTracks(request.getParameter("allTracks"));
+		searchConfig.setShowBuildings(request.getParameter("showBuildings"));
 		return downloadService.downloadData(boundingBox, searchConfig);
 	}
 }
