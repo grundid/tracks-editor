@@ -9,7 +9,7 @@
 
 	<context:annotation-config />
 	<context:component-scan
-		base-package="org.osmsurround.selective,org.osmsurround.api,org.osmsurround.oauth" />
+		base-package="org.osmsurround.selective,org.osmtools.api,org.osmtools.oauth" />
 	<context:property-placeholder location="classpath:config.properties" />
 	<context:property-override location="classpath:config-inject.properties" />
 	<mvc:default-servlet-handler />
@@ -71,7 +71,7 @@
 
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
 	</bean>
-	<bean id="osmTemplate" class="org.osmsurround.api.OsmTemplate">
+	<bean id="osmTemplate" class="org.osmtools.api.OsmTemplate">
 		<constructor-arg index="0" value="${osmApiBaseUrl}" />
 		<constructor-arg index="1" value="${consumerKey}" />
 		<constructor-arg index="2" value="${consumerSecret}" />

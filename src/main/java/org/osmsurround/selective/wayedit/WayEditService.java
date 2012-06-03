@@ -3,9 +3,9 @@ package org.osmsurround.selective.wayedit;
 import java.util.List;
 
 import org.osm.schema.OsmWay;
-import org.osmsurround.api.ChangesetOperations;
-import org.osmsurround.api.OsmOperations;
-import org.osmsurround.oauth.OauthTokens;
+import org.osmtools.api.ChangesetOperations;
+import org.osmtools.api.OsmOperations;
+import org.osmtools.oauth.OauthTokens;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

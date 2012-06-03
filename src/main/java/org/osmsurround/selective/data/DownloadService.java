@@ -9,13 +9,13 @@ import org.osm.schema.OsmNd;
 import org.osm.schema.OsmNode;
 import org.osm.schema.OsmTag;
 import org.osm.schema.OsmWay;
-import org.osmsurround.api.BoundingBox;
-import org.osmsurround.api.OsmTemplate;
-import org.osmsurround.geojson.Feature;
-import org.osmsurround.geojson.FeatureCollection;
-import org.osmsurround.geojson.LineString;
-import org.osmsurround.geojson.Polygon;
-import org.osmsurround.overpass.OverpassTemplate;
+import org.osmtools.api.BoundingBox;
+import org.osmtools.api.OsmTemplate;
+import org.osmtools.geojson.Feature;
+import org.osmtools.geojson.FeatureCollection;
+import org.osmtools.geojson.LineString;
+import org.osmtools.geojson.Polygon;
+import org.osmtools.overpass.OverpassTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -78,7 +78,8 @@ public class DownloadService {
 				}
 
 				feature.setProperty("tags", tags);
-				feature.setProperty("wayId", osmWay.getId());
+				feature.setProperty("objectId", osmWay.getId());
+				feature.setProperty("objectType", "track");
 				feature.setProperty("style", new LeafletStyle(colors[colorIndex]));
 				colorIndex = (colorIndex + 1) % colors.length;
 
@@ -122,7 +123,8 @@ public class DownloadService {
 			}
 
 			feature.setProperty("tags", tags);
-			feature.setProperty("wayId", osmWay.getId());
+			feature.setProperty("objectId", osmWay.getId());
+			feature.setProperty("objectType", "building");
 			feature.setProperty("style", new LeafletStyle(colors[colorIndex]));
 			colorIndex = (colorIndex + 1) % colors.length;
 

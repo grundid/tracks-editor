@@ -30,8 +30,8 @@ public class WayEditTest {
 	@Test
 	public void testUpdateOsmWay() throws Exception {
 		WayEdit wayEdit = new WayEdit();
-		wayEdit.setTracktype("grade1");
-		wayEdit.setSurface("gravel");
+		wayEdit.getTags().put("tracktype", "grade1");
+		wayEdit.getTags().put("surface", "gravel");
 
 		wayEdit.updateOsmWay(osmWay);
 
@@ -45,8 +45,7 @@ public class WayEditTest {
 	@Test
 	public void testUpdateOsmWayDelete() throws Exception {
 		WayEdit wayEdit = new WayEdit();
-		wayEdit.setTracktype("");
-		wayEdit.setSurface("");
+		wayEdit.getTags().put("tracktype", "");
 
 		wayEdit.updateOsmWay(osmWay);
 		assertEquals(1, osmWay.getTag().size());

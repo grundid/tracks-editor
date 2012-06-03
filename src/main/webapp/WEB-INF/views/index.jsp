@@ -41,6 +41,19 @@ form {
 .leaflet-control-layers-list input {
 	display: inline !important;
 }
+
+.form-horizontal .control-label {
+	width: 100px !important;
+	overflow: hidden;
+}
+
+.form-horizontal .control-group {
+	margin-bottom: 9px;
+}
+
+.form-horizontal .controls {
+	margin-left: 110px;
+}
 </style>
 
 <!-- Leaflet JavaScript -->

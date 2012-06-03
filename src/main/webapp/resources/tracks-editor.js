@@ -1,60 +1,103 @@
-var trackFields = [ {
-	label : "Tracktype",
-	name : "tracktype",
-	type : "select",
-	options : [ {
-		value : ""
-	}, {
-		value : "grade1"
-	}, {
-		value : "grade2"
-	}, {
-		value : "grade3"
-	}, {
-		value : "grade4"
-	}, {
-		value : "grade5"
-	} ]
-}, {
-	label : "Surface",
-	name : "surface",
-	type : "select",
-	options : [ {
-		value : ""
-	}, {
-		value : "artificial_turf"
-	}, {
-		value : "asphalt"
-	}, {
-		value : "cobblestone"
-	}, {
-		value : "concrete"
-	}, {
-		value : "compacted "
-	}, {
-		value : "dirt"
-	}, {
-		value : "grass"
-	}, {
-		value : "gravel"
-	}, {
-		value : "ground"
-	}, {
-		value : "metal"
-	}, {
-		value : "pebblestone"
-	}, {
-		value : "paved"
-	}, {
-		value : "sand"
-	}, {
-		value : "tartan"
-	}, {
-		value : "unpaved"
-	}, {
-		value : "wood"
-	} ]
-} ];
+var templates = {
+	building : {
+		"building" : {
+			label : "Building",
+			name : "building",
+			type : "select",
+			options : [ {
+				value : ""
+			}, {
+				value : "yes"
+			} ]
+		},
+
+		"addr:street" : {
+			label : "Street",
+			name : "addr:street",
+			type : "text"
+		},
+		"addr:housenumber" : {
+			label : "Housenumber",
+			name : "addr:housenumber",
+			type : "text"
+		},
+		"addr:postcode" : {
+			label : "Postcode",
+			name : "addr:postcode",
+			type : "text"
+		},
+		"addr:city" : {
+			label : "City",
+			name : "addr:city",
+			type : "text"
+		},
+		"addr:country" : {
+			label : "Country",
+			name : "addr:country",
+			type : "text"
+		}
+	},
+	track : {
+		tracktype : {
+			label : "Tracktype",
+			name : "tracktype",
+			type : "select",
+			options : [ {
+				value : ""
+			}, {
+				value : "grade1"
+			}, {
+				value : "grade2"
+			}, {
+				value : "grade3"
+			}, {
+				value : "grade4"
+			}, {
+				value : "grade5"
+			} ]
+		},
+		surface : {
+			label : "Surface",
+			name : "surface",
+			type : "select",
+			options : [ {
+				value : ""
+			}, {
+				value : "artificial_turf"
+			}, {
+				value : "asphalt"
+			}, {
+				value : "cobblestone"
+			}, {
+				value : "concrete"
+			}, {
+				value : "compacted "
+			}, {
+				value : "dirt"
+			}, {
+				value : "grass"
+			}, {
+				value : "gravel"
+			}, {
+				value : "ground"
+			}, {
+				value : "metal"
+			}, {
+				value : "pebblestone"
+			}, {
+				value : "paved"
+			}, {
+				value : "sand"
+			}, {
+				value : "tartan"
+			}, {
+				value : "unpaved"
+			}, {
+				value : "wood"
+			} ]
+		}
+	}
+};
 
 var myPosition = null;
 
@@ -112,7 +155,7 @@ geojsonLayer.on("featureparse", function(e) {
 		e.layer.setStyle(e.properties.style);
 	}
 
-	knownWays[e.properties.wayId] = e;
+	knownWays[e.properties.objectId] = e;
 
 	(function(layer, props) {
 		e.layer.on("mouseover", function(e) {
@@ -127,9 +170,9 @@ geojsonLayer.on("featureparse", function(e) {
 
 	})(e.layer, e.properties);
 
-	if (e.properties && e.properties.wayId) {
+	if (e.properties && e.properties.objectId) {
 		e.layer.bindPopup(createEditorPopup(e.properties), {
-			wayId : e.properties.wayId
+			objectId : e.properties.objectId
 		});
 	}
 });
@@ -138,7 +181,7 @@ function createField(field, fieldId, data) {
 	var elem = $();
 	var value = data[field.name] ? data[field.name] : "";
 	if (field.type == "text") {
-		elem = $('<input type="text" class="span3" value="' + value + '">');
+		elem = $('<input type="text" class="input-medium" value="' + value + '">');
 	} else if (field.type == "textarea") {
 		elem = $('<textarea style="height:200px" class="span3">' + value + '</textarea>');
 
@@ -170,6 +213,15 @@ function createField(field, fieldId, data) {
 	return $('<div class="controls" />').html(elem);
 };
 
+function createFieldElement(x, currentField, props) {
+	var fieldId = "input" + x;
+	var field = $('<div class="control-group" />');
+	field.append('<label class="control-label" for="' + fieldId + '">' + currentField.label
+			+ ':</label>');
+	field.append(createField(currentField, fieldId, props.tags));
+	return field;
+}
+
 function createEditorPopup(props) {
 
 	var tags = "";
@@ -177,58 +229,88 @@ function createEditorPopup(props) {
 		tags += tag + "=" + props.tags[tag] + "<br>";
 	}
 
-	var elem = $('<div style="margin:10px;width:400px" />');
+	var elem = $('<div style="margin:10px;width:300px;" />');
 
-	elem.append('<h6><a href="http://www.openstreetmap.org/browse/way/' + props.wayId
-			+ '" target="osmWay">Way ID ' + props.wayId + '</a></h6>Current tags:<br>' + tags);
+	elem.append('<h6><a href="http://www.openstreetmap.org/browse/way/' + props.objectId
+			+ '" target="osmWay">Way ID ' + props.objectId + '</a></h6>');
 
 	var form = $('<form class="form-horizontal" />');
-	form.attr("id", "form_" + props.wayId);
-	form.append('<input type="hidden" name="wayId" value="' + props.wayId + '" />');
+	form.attr("id", "form_" + props.objectId);
+	form.append('<input type="hidden" name="objectId" value="' + props.objectId + '" />');
 
-	var fields = trackFields;
-
+	var fields = templates[props.objectType];
+	var requiredFields = [];
 	var fieldset = $('<fieldset />');
 	fieldset.append("<h6>Change properties</h6>");
-	for ( var x = 0; x < fields.length; x++) {
-		var fieldId = "input" + x;
-		var field = $('<div class="control-group" />');
-		field.append('<label class="control-label" for="' + fieldId + '">' + fields[x].label
-				+ ':</label>');
-		field.append(createField(fields[x], fieldId, props.tags));
-		fieldset.append(field);
+
+	var fieldsetDiv = $('<div class="fieldset-fields" style="max-height:280px;overflow-y:scroll;margin-bottom:5px" />');
+	var x = 0;
+	for ( var tag in fields) {
+		x++;
+		var currentField = fields[tag];
+		requiredFields.push(tag);
+		fieldsetDiv.append(createFieldElement(x, currentField, props));
 	}
 
+	for ( var tag in props.tags) {
+		x++;
+		var currentField = {
+			name : tag,
+			label : tag,
+			type : "text"
+		};
+		if ($.inArray(tag, requiredFields) == -1) {
+			fieldsetDiv.append(createFieldElement(x, currentField, props));
+		}
+	}
+	fieldset.append(fieldsetDiv);
 	form.append(fieldset);
 	form
-			.append('<button type="button" class="btn btn-small btn-primary" onclick="saveWay(this.form);">Save</button>&nbsp;'
+			.append('<div style="margin-top:5px"><button type="button" class="btn btn-small btn-primary" onclick="saveWay(this.form);">Save</button>&nbsp;'
 					+ '<button type="button" class="btn btn-small" onclick="cancelPopup(this.form);">Cancel</button>&nbsp;'
+					+ '<button type="button" class="btn btn-small" onclick="addTag(this.form);">Add tag</button>&nbsp;'
 					+ '<button type="button" class="btn btn-small" onclick="selectWay('
-					+ props.wayId + ');">open in JOSM</button>&nbsp;');
+					+ props.objectId + ');">Open in JOSM</button></div>');
 	elem.append(form);
 	return $('<div class="modal-body" />').html(elem).html();
 }
 
 function cancelPopup(form) {
-	var wayId = $(form).find("[name=wayId]").val();
-	var knownWay = knownWays[wayId];
+	var objectId = $(form).find("[name=objectId]").val();
+	var knownWay = knownWays[objectId];
 	map.closePopup(knownWay.layer._popup);
 }
 
+function addTag(form) {
+	var tag = prompt("Please enter the tag name:");
+	if (tag) {
+		var currentField = {
+			name : tag,
+			label : tag,
+			type : "text"
+		};
+		var elem = createFieldElement(new Date().getTime(), currentField, {tags:{}});
+		$(form).find("div.fieldset-fields").append(elem);
+		elem.find(":input").get(0).focus();
+	}
+}
+
 function saveWay(form) {
-
 	if (assertAuthorized()) {
+		var osmObject = {};
+		var objectId = $(form).find("[name=objectId]").val();
+		osmObject["objectId"] = objectId;
+		var tags = {};
+		$(form).find("fieldset :input").each(function() {
+			tags[$(this).attr("name")] = $(this).val();
 
-		var params = {};
-		var wayId = $(form).find("[name=wayId]").val();
-		params["wayId"] = wayId;
-		params["tracktype"] = $(form).find("[name=tracktype]").val();
-		params["surface"] = $(form).find("[name=surface]").val();
+		});
+		osmObject["tags"] = tags;
 
-		pendingWays[wayId] = params;
+		pendingWays[objectId] = osmObject;
 
-		var knownWay = knownWays[wayId];
-		$.extend(knownWay.properties.tags, params);
+		var knownWay = knownWays[objectId];
+		$.extend(knownWay.properties.tags, tags);
 		knownWay.properties.style.color = "#0000ff";
 
 		knownWay.layer.setStyle(knownWay.properties.style);
@@ -252,8 +334,8 @@ function updatePendingWays() {
 }
 
 function clearPendingWays() {
-	for ( var wayId in pendingWays) {
-		geojsonLayer.removeLayer(knownWays[wayId].layer);
+	for ( var objectId in pendingWays) {
+		geojsonLayer.removeLayer(knownWays[objectId].layer);
 	}
 	pendingWays = {};
 	updatePendingWays();
@@ -329,7 +411,8 @@ function downloadData() {
 				success : function(data) {
 					if (data.features && data.features.length) {
 						geojsonLayer.addGeoJSON(data);
-						showMessageBox(data.features.length + " ways found.");
+						showMessageBox(data.features.length + " objects found.");
+						localStorage.setItem("lastData", JSON.stringify(data));
 					} else
 						alert("No tracks without tracktype tag found. This is good. Congrats!");
 				}
@@ -343,13 +426,13 @@ function showMessageBox(msg) {
 	$('#messageBox').fadeIn(100).delay(2000).fadeOut(250);
 }
 
-function selectWay(wayId) {
+function selectWay(objectId) {
 
 	var bounds = map.getBounds();
 	var sw = bounds.getSouthWest();
 	var ne = bounds.getNorthEast();
 	var params = "left=" + sw.lng + "&top=" + ne.lat + "&right=" + ne.lng + "&bottom=" + sw.lat
-			+ "&select=way" + wayId + "";
+			+ "&select=way" + objectId + "";
 
 	if ($('#tracktype').val() != 'none')
 		params += "&addtags=tracktype=" + $('#tracktype').val();
@@ -381,14 +464,13 @@ $.ajaxSetup({
 	}
 });
 
-
 map.on("popupopen", function(clickEvent) {
-	var wayId = clickEvent.popup.options["wayId"];
-	var params = pendingWays[wayId];
+	var objectId = clickEvent.popup.options["objectId"];
+	var params = pendingWays[objectId];
 	if (params) {
-		for ( var key in params) {
-			var value = params[key];
-			var elem = $('#form_' + wayId).find('[name=' + key + ']');
+		for ( var key in params.tags) {
+			var value = params.tags[key];
+			var elem = $('#form_' + objectId).find('[name="' + key + '"]');
 			elem.val(value);
 		}
 	}
@@ -451,6 +533,15 @@ function updateOauth(token, secret, username) {
 
 		if (posAvailable) {
 			map.setView(new L.LatLng(lastLat, lastLon), lastZoom);
+		}
+
+		if (localStorage.getItem('lastData')) {
+
+			var lastData = $.parseJSON(localStorage.getItem('lastData'));
+			if (lastData) {
+				geojsonLayer.addGeoJSON(lastData);
+				showMessageBox(lastData.features.length + " objects found.");
+			}
 		}
 
 	} else {
