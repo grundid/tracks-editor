@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>OSM Tracks Editor</title>
+<title>OSM QA Editor</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="rs/leaflet/leaflet.css" />
@@ -68,7 +68,7 @@ form {
 				<div class="container">
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span>
-					</a> <a class="brand" href="#">OSM Tracks Editor</a>
+					</a> <a class="brand" href="#">OSM QA Editor</a>
 					<ul class="nav">
 						<li><a href="#" onclick="downloadData();"><i class="icon-download icon-white"></i><span
 								class="visible-desktop">&nbsp;Download OSM Data</span></a></li>
@@ -83,20 +83,23 @@ form {
 						<li><a data-toggle="modal" href="#aboutDialog">About</a></li>
 					</ul>
 					<div class="nav-collapse">
-						<ul class="nav">
-							<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#">Options <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="#"><label><input style="display: inline" type="checkbox" checked="checked"
-												value="true" id="useOverpass">&nbsp; Use Overpass API</label></a></li>
-									<li><a href="#"><label><input style="display: inline" type="checkbox" value="true"
-												id="withoutSurface">&nbsp;Show tracks without surface</label></a></li>
-									<li><a href="#"><label><input style="display: inline" type="checkbox" value="true"
-												id="allTracks">&nbsp;Show all tracks</label></a></li>
-									<li><a href="#"><label><input style="display: inline" type="checkbox" value="true"
-												id="showBuildings">&nbsp;Show buildings (experimental)</label></a></li>
-								</ul></li>
-
-						</ul>
+						<form id="options">
+							<ul class="nav">
+								<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#">Options <b
+										class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="#"><label><input style="display: inline" type="checkbox" checked="checked"
+													value="true" name="overpass">&nbsp; Use Overpass API</label></a></li>
+										<li class="divider"></li>
+										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
+													value="noTracktype" checked="checked">&nbsp;Show tracks without surface</label></a></li>
+										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
+													value="noSurface">&nbsp;Show tracks without surface</label></a></li>
+										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
+													value="noAddress">&nbsp;Show buildings without address</label></a></li>
+									</ul></li>
+							</ul>
+						</form>
 					</div>
 
 				</div>
@@ -116,27 +119,27 @@ form {
 	<div class="modal" id="aboutDialog" style="display: none">
 		<div class="modal-header">
 			<button class="close" data-dismiss="modal">×</button>
-			<h3>About OSM Tracks Editor</h3>
+			<h3>About OSM QA Editor</h3>
 		</div>
 		<div class="modal-body">
 			<p>
-				This tool will download and show you all the <b>tracks</b> in the current view <b>without a <a
-					href="http://wiki.openstreetmap.org/wiki/Key:tracktype" target="_blank">tracktype tag</a></b>. After data download
-				click on a colored way to see the details and modify them.
+				This tool will download and show you different problematic objects, like tracks <b>without a <a
+					href="http://wiki.openstreetmap.org/wiki/Key:tracktype" target="_blank">tracktype tag</a></b> or buildings without an
+				address in the current view . After data download click on a colored object to see the details and modify them.
 			</p>
-			<p>To edit the tracks in this editor please press the login button and authorize the Tracks Editor to be able to
-				edit ways unter your OSM username.</p>
+			<p>To edit objects in this editor please press the login button and authorize the QA Editor to be able to edit
+				ways unter your OSM username.</p>
 			<p>
 				<strong>Note:</strong> the access tokens will be stored in your current browser. Do not use this function on a
 				public computer or at least delete the tokens by pressing the "Logout" button.
 			</p>
-			<p>You can also use JOSM to edit ways. Press the "open in JOSM" button for that. Please download the same area in
-				JOSM first.</p>
+			<p>You can also use JOSM to edit objects. Press the "open in JOSM" button for that. Please download the same area
+				in JOSM first.</p>
 
 			<p>
-				The Tracks Editor downloads tracks via <a href="http://www.overpass-api.de" target="_blank">Openpass API</a> by
+				The QA Editor downloads objects via <a href="http://www.overpass-api.de" target="_blank">Openpass API</a> by
 				default. Please note that this API is some minutes behind the OSM server. If you download the same region after
-				having uploaded your changes you might see that the ways are still unchanged. Please wait a few minutes or disable
+				having uploaded your changes you might see that the objects are still unchanged. Please wait a few minutes or disable
 				the Overpass API in the options menu in this case.
 			</p>
 			<p>

@@ -78,6 +78,11 @@
 	</bean>
 
 
+	<bean class="org.osmtools.overpass.OverpassTemplate">
+		<constructor-arg ref="restTemplate"></constructor-arg>
+	</bean>
+
+
 	<!-- Transactions and Database -->
 	<!-- <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" 
 		/> <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 

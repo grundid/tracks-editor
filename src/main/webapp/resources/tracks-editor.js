@@ -143,7 +143,7 @@ map.addLayer(osmLayer);
 var geojsonLayer = new L.GeoJSON();
 
 var overlayLayers = {
-	"Tracks" : geojsonLayer
+	"Objects" : geojsonLayer
 };
 
 map.addLayer(geojsonLayer);
@@ -289,7 +289,9 @@ function addTag(form) {
 			label : tag,
 			type : "text"
 		};
-		var elem = createFieldElement(new Date().getTime(), currentField, {tags:{}});
+		var elem = createFieldElement(new Date().getTime(), currentField, {
+			tags : {}
+		});
 		$(form).find("div.fieldset-fields").append(elem);
 		elem.find(":input").get(0).focus();
 	}
@@ -352,7 +354,7 @@ function uploadChanges() {
 			var model = {};
 			model["ways"] = pendingWays;
 			model["comment"] = prompt("Please enter a comment for the changeset:",
-					"tracktype and surface update");
+					"");
 			model["token"] = token;
 			model["tokenSecret"] = secret;
 
@@ -395,10 +397,8 @@ function downloadData() {
 			var params = "west=" + sw.lng + "&north=" + ne.lat + "&east=" + ne.lng + "&south="
 					+ sw.lat;
 
-			params += "&withoutSurface=" + $('#withoutSurface:checked').val();
-			params += "&useOverpass=" + $('#useOverpass:checked').val();
-			params += "&allTracks=" + $('#allTracks:checked').val();
-			params += "&showBuildings=" + $('#showBuildings:checked').val();
+			var options = $('#options').serialize();
+			params += "&" + options;
 
 			$.ajax({
 				url : 'downloadData?' + params,
@@ -543,6 +543,10 @@ function updateOauth(token, secret, username) {
 				showMessageBox(lastData.features.length + " objects found.");
 			}
 		}
+
+		$('#options :radio').on('change', function() {
+			downloadData();
+		});
 
 	} else {
 		alert("Your browser does not support local storage. You won't be able to perform any changes.");

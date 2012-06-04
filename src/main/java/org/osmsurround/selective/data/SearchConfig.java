@@ -2,56 +2,27 @@ package org.osmsurround.selective.data;
 
 public class SearchConfig {
 
-	private String withoutSurface;
-	private String useOverpass;
-	private String showBuildings;
-	private String allTracks;
+	private Boolean overpass;
+	private String template;
 
-	public String getShowBuildings() {
-		return showBuildings;
+	public Boolean getOverpass() {
+		return overpass;
 	}
 
-	public void setShowBuildings(String showBuildings) {
-		this.showBuildings = showBuildings;
-	}
-
-	public String getAllTracks() {
-		return allTracks;
-	}
-
-	public void setAllTracks(String allTracks) {
-		this.allTracks = allTracks;
-	}
-
-	public String getWithoutSurface() {
-		return withoutSurface;
-	}
-
-	public void setWithoutSurface(String withoutSurface) {
-		this.withoutSurface = withoutSurface;
-	}
-
-	public String getUseOverpass() {
-		return useOverpass;
-	}
-
-	public void setUseOverpass(String useOverpass) {
-		this.useOverpass = useOverpass;
+	public void setOverpass(Boolean overpass) {
+		this.overpass = overpass;
 	}
 
 	public boolean isUseOverpass() {
-		return "true".equals(useOverpass);
+		return Boolean.TRUE.equals(overpass);
 	}
 
-	public boolean isShowBuildings() {
-		return "true".equals(showBuildings);
+	public String getTemplate() {
+		return template;
 	}
 
-	public boolean isAllTracks() {
-		return "true".equals(allTracks);
+	public void setTemplate(String template) {
+		this.template = template;
 	}
 
-	public boolean isWithoutSurface() {
-		return "true".equals(withoutSurface);
-	}
 }

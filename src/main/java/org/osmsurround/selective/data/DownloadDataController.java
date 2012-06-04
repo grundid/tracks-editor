@@ -1,7 +1,5 @@
 package org.osmsurround.selective.data;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osmtools.api.BoundingBox;
 import org.osmtools.geojson.Geometry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +17,7 @@ public class DownloadDataController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody
-	Geometry get(BoundingBox boundingBox, SearchConfig searchConfig, HttpServletRequest request) throws Exception {
-		searchConfig.setUseOverpass(request.getParameter("useOverpass"));
-		searchConfig.setWithoutSurface(request.getParameter("withoutSurface"));
-		searchConfig.setAllTracks(request.getParameter("allTracks"));
-		searchConfig.setShowBuildings(request.getParameter("showBuildings"));
+	Geometry get(BoundingBox boundingBox, SearchConfig searchConfig) throws Exception {
 		return downloadService.downloadData(boundingBox, searchConfig);
 	}
 }
