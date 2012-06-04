@@ -135,7 +135,7 @@
 			<id>build-prd</id>
 			<properties>
 				<config.build.type>PRD</config.build.type>
-				<oauth.callbackUrl>http://tracks.osmsurround.org/oauthResponse</oauth.callbackUrl>
+				<oauth.callbackUrl>http://editor.osmsurround.org/oauthResponse</oauth.callbackUrl>
 			</properties>
 			<build>
 				<finalName>ROOT</finalName>

@@ -146,7 +146,7 @@ form {
 				Created by <a href="http://www.openstreetmap.org/user/nitegate">nitegate</a> (<a href="http://www.grundid.de">GrundID
 					GmbH</a>), Data by <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
 			</p>
-			<p>Powered by Leaflet, Bootstrap, jQuery, osm-tools.
+			<p>Powered by Leaflet, Bootstrap, jQuery, osm-tools. Source code at: <a href="https://github.com/grundid/tracks-editor">GitHub</a>.
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="btn" onclick="$('#aboutDialog').modal('hide');">Close</a>
