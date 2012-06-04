@@ -97,6 +97,8 @@ form {
 													value="noSurface">&nbsp;Show tracks without surface</label></a></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
 													value="noAddress">&nbsp;Show buildings without address</label></a></li>
+										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
+													value="noNameResidential">&nbsp;Show residential without name</label></a></li>
 									</ul></li>
 							</ul>
 						</form>

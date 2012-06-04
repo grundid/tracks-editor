@@ -20,6 +20,8 @@ public class ConverterContext {
 	private String objectType;
 	private SearchConfig searchConfig;
 
+	private Map<String, Object> support = new HashMap<String, Object>();
+
 	public ConverterContext(Osm osm, String objectType, SearchConfig searchConfig) {
 		this.osm = osm;
 		this.objectType = objectType;
@@ -57,5 +59,13 @@ public class ConverterContext {
 
 	public SearchConfig getSearchConfig() {
 		return searchConfig;
+	}
+
+	public Map<String, Object> getSupport() {
+		return support;
+	}
+
+	public void setSupport(String key, Object object) {
+		this.support.put(key, object);
 	}
 }

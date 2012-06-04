@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.osm.schema.OsmTag;
 import org.osm.schema.OsmWay;
+import org.osmsurround.selective.data.DownloadDataResponse;
 import org.osmsurround.selective.data.LeafletStyle;
 import org.osmtools.api.OsmOperations;
 import org.osmtools.geojson.Feature;
@@ -28,6 +29,13 @@ public abstract class AbstractDataConverter implements OsmDataConverter {
 	protected abstract boolean useObject(OsmWay osmWay, ConverterContext context);
 
 	protected abstract Geometry convertObjectToGeometry(OsmWay osmWay, ConverterContext context);
+
+	protected DownloadDataResponse createDataResponse(ConverterContext context) {
+		FeatureCollection featureCollection = filterObjects(context);
+		DownloadDataResponse response = new DownloadDataResponse(featureCollection);
+		response.setSupport(context.getSupport());
+		return response;
+	}
 
 	protected FeatureCollection filterObjects(ConverterContext context) {
 		FeatureCollection featureCollection = new FeatureCollection();

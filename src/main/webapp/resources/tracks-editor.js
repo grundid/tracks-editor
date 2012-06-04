@@ -37,6 +37,13 @@ var templates = {
 			type : "text"
 		}
 	},
+	noname : {
+		name : {
+			label : "Name",
+			name : "name",
+			type : "text"
+		}
+	},
 	track : {
 		tracktype : {
 			label : "Tracktype",
@@ -100,6 +107,7 @@ var templates = {
 };
 
 var myPosition = null;
+var support = null;
 
 var pendingWays = {};
 var knownWays = {};
@@ -181,7 +189,8 @@ function createField(field, fieldId, data) {
 	var elem = $();
 	var value = data[field.name] ? data[field.name] : "";
 	if (field.type == "text") {
-		elem = $('<input type="text" class="input-medium" value="' + value + '">');
+		elem = $('<input type="text" class="input-medium" value="' + value
+				+ '" autocomplete="off" data-provide="typeahad">');
 	} else if (field.type == "textarea") {
 		elem = $('<textarea style="height:200px" class="span3">' + value + '</textarea>');
 
@@ -353,8 +362,7 @@ function uploadChanges() {
 
 			var model = {};
 			model["ways"] = pendingWays;
-			model["comment"] = prompt("Please enter a comment for the changeset:",
-					"");
+			model["comment"] = prompt("Please enter a comment for the changeset:", "");
 			model["token"] = token;
 			model["tokenSecret"] = secret;
 
@@ -409,12 +417,13 @@ function downloadData() {
 							+ "the server.\nTry to zoom in a little.");
 				},
 				success : function(data) {
-					if (data.features && data.features.length) {
-						geojsonLayer.addGeoJSON(data);
-						showMessageBox(data.features.length + " objects found.");
+					if (data.geometry.features && data.geometry.features.length) {
+						support = data.support;
+						geojsonLayer.addGeoJSON(data.geometry);
+						showMessageBox(data.geometry.features.length + " objects found.");
 						localStorage.setItem("lastData", JSON.stringify(data));
 					} else
-						alert("No tracks without tracktype tag found. This is good. Congrats!");
+						alert("No objects with problems found. This is good. Congrats!");
 				}
 			});
 		}
@@ -474,6 +483,16 @@ map.on("popupopen", function(clickEvent) {
 			elem.val(value);
 		}
 	}
+	$('#form_' + objectId).find(':input').each(function() {
+		var elem = $(this);
+		var name = $(this).attr("name");
+		if (support[name]) {
+			elem.typeahead({
+				'source' : support[name]
+			});
+		}
+	});
+
 });
 map.on("moveend", function(moveEvent) {
 	if (window.localStorage) {
@@ -538,9 +557,10 @@ function updateOauth(token, secret, username) {
 		if (localStorage.getItem('lastData')) {
 
 			var lastData = $.parseJSON(localStorage.getItem('lastData'));
-			if (lastData) {
-				geojsonLayer.addGeoJSON(lastData);
-				showMessageBox(lastData.features.length + " objects found.");
+			if (lastData.geometry) {
+				support = lastData.support;
+				geojsonLayer.addGeoJSON(lastData.geometry);
+				showMessageBox(lastData.geometry.features.length + " objects found.");
 			}
 		}
 
