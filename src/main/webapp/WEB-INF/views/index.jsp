@@ -92,7 +92,7 @@ form {
 													value="true" name="overpass">&nbsp; Use Overpass API</label></a></li>
 										<li class="divider"></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
-													value="noTracktype" checked="checked">&nbsp;Show tracks without surface</label></a></li>
+													value="noTracktype" checked="checked">&nbsp;Show tracks without tracktype</label></a></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
 													value="noSurface">&nbsp;Show tracks without surface</label></a></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
