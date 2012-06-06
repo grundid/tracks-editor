@@ -17,10 +17,16 @@ public class BuildingDataConverter extends AbstractDataConverter {
 
 	@Override
 	public DownloadDataResponse convert(BoundingBox boundingBox, SearchConfig searchConfig) {
-		Osm osm = searchConfig.isUseOverpass() ? overpassTemplate.getBuildings(boundingBox) : osmTemplate
-				.getBBox(boundingBox);
+		String data = "(way(" + boundingBox.getSouth() + "," + boundingBox.getWest() + "," + boundingBox.getNorth()
+				+ "," + boundingBox.getEast() + ");node(w)->.x;);out meta;";
+
+		Osm osm = searchConfig.isUseOverpass() ? overpassTemplate.getRaw(data) : osmTemplate.getBBox(boundingBox);
 		ConverterContext context = new ConverterContext(osm, "building", searchConfig);
+		prepareContext(context);
 		return createDataResponse(context);
+	}
+
+	protected void prepareContext(ConverterContext context) {
 	}
 
 	@Override
