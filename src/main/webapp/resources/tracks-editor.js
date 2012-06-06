@@ -1,111 +1,3 @@
-var templates = {
-	building : {
-		"building" : {
-			label : "Building",
-			name : "building",
-			type : "select",
-			options : [ {
-				value : ""
-			}, {
-				value : "yes"
-			} ]
-		},
-
-		"addr:street" : {
-			label : "Street",
-			name : "addr:street",
-			type : "text"
-		},
-		"addr:housenumber" : {
-			label : "Housenumber",
-			name : "addr:housenumber",
-			type : "text"
-		},
-		"addr:postcode" : {
-			label : "Postcode",
-			name : "addr:postcode",
-			type : "text"
-		},
-		"addr:city" : {
-			label : "City",
-			name : "addr:city",
-			type : "text"
-		},
-		"addr:country" : {
-			label : "Country",
-			name : "addr:country",
-			type : "text"
-		}
-	},
-	noname : {
-		name : {
-			label : "Name",
-			name : "name",
-			type : "text"
-		}
-	},
-	track : {
-		tracktype : {
-			label : "Tracktype",
-			name : "tracktype",
-			type : "select",
-			options : [ {
-				value : ""
-			}, {
-				value : "grade1"
-			}, {
-				value : "grade2"
-			}, {
-				value : "grade3"
-			}, {
-				value : "grade4"
-			}, {
-				value : "grade5"
-			} ]
-		},
-		surface : {
-			label : "Surface",
-			name : "surface",
-			type : "select",
-			options : [ {
-				value : ""
-			}, {
-				value : "artificial_turf"
-			}, {
-				value : "asphalt"
-			}, {
-				value : "cobblestone"
-			}, {
-				value : "concrete"
-			}, {
-				value : "compacted "
-			}, {
-				value : "dirt"
-			}, {
-				value : "grass"
-			}, {
-				value : "gravel"
-			}, {
-				value : "ground"
-			}, {
-				value : "metal"
-			}, {
-				value : "pebblestone"
-			}, {
-				value : "paved"
-			}, {
-				value : "sand"
-			}, {
-				value : "tartan"
-			}, {
-				value : "unpaved"
-			}, {
-				value : "wood"
-			} ]
-		}
-	}
-};
-
 var myPosition = null;
 var support = null;
 
@@ -189,11 +81,11 @@ function createField(field, fieldId, data) {
 	var elem = $();
 	var value = data[field.name] ? data[field.name] : "";
 	if (field.type == "text") {
-		elem = $('<input type="text" class="input-medium" value="' + value
-				+ '" autocomplete="off" data-provide="typeahad">');
+		elem = $('<input type="text" class="input-medium" autocomplete="off" data-provide="typeahad" />');
+		elem.attr('value', value);
 	} else if (field.type == "textarea") {
-		elem = $('<textarea style="height:200px" class="span3">' + value + '</textarea>');
-
+		elem = $('<textarea style="height:200px" class="span3" />');
+		elem.attr('value', value);
 	} else if (field.type == "select") {
 		elem = $('<select class="input-small" />');
 		var optionFound = false;
@@ -208,7 +100,9 @@ function createField(field, fieldId, data) {
 			elem.append(option);
 		}
 		if (!optionFound) {
-			var option = $('<option value="' + value + '">' + value + '</option>');
+			var option = $('<option />');
+			option.attr('value', value);
+			option.text(value);
 			option.attr('selected', 'selected');
 			elem.prepend(option);
 		}
@@ -225,8 +119,10 @@ function createField(field, fieldId, data) {
 function createFieldElement(x, currentField, props) {
 	var fieldId = "input" + x;
 	var field = $('<div class="control-group" />');
-	field.append('<label class="control-label" for="' + fieldId + '">' + currentField.label
-			+ ':</label>');
+	var label = $('<label class="control-label" for="' + fieldId + '" />');
+	var labelValue = currentField.labelCode ? MSG[currentField.labelCode] : currentField.label;
+	label.text(labelValue + ':');
+	field.append(label);
 	field.append(createField(currentField, fieldId, props.tags));
 	return field;
 }
@@ -275,11 +171,18 @@ function createEditorPopup(props) {
 	fieldset.append(fieldsetDiv);
 	form.append(fieldset);
 	form
-			.append('<div style="margin-top:5px"><button type="button" class="btn btn-small btn-primary" onclick="saveWay(this.form);">Save</button>&nbsp;'
-					+ '<button type="button" class="btn btn-small" onclick="cancelPopup(this.form);">Cancel</button>&nbsp;'
-					+ '<button type="button" class="btn btn-small" onclick="addTag(this.form);">Add tag</button>&nbsp;'
+			.append('<div style="margin-top:5px">'
+					+ '<button type="button" class="btn btn-small btn-primary" onclick="saveWay(this.form);">'
+					+ MSG.button_save
+					+ '</button>&nbsp;'
+					+ '<button type="button" class="btn btn-small" onclick="cancelPopup(this.form);">'
+					+ MSG.button_cancel
+					+ '</button>&nbsp;'
+					+ '<button type="button" class="btn btn-small" onclick="addTag(this.form);" title="'
+					+ MSG.button_add_tag_title + '">' + MSG.button_add_tag + '</button>&nbsp;'
 					+ '<button type="button" class="btn btn-small" onclick="selectWay('
-					+ props.objectId + ');">Open in JOSM</button></div>');
+					+ props.objectId + ');" title="' + MSG.button_josm_title + '">'
+					+ MSG.button_josm + '</button></div>');
 	elem.append(form);
 	return $('<div class="modal-body" />').html(elem).html();
 }
@@ -291,7 +194,7 @@ function cancelPopup(form) {
 }
 
 function addTag(form) {
-	var tag = prompt("Please enter the tag name:");
+	var tag = prompt(MSG.prompt_tag_name);
 	if (tag) {
 		var currentField = {
 			name : tag,
@@ -355,14 +258,14 @@ function clearPendingWays() {
 function uploadChanges() {
 	if (window.localStorage) {
 		if ($.isEmptyObject(pendingWays)) {
-			showMessageBox("No changes available for upload");
+			showMessageBox(MSG.warn_no_changes);
 		} else {
 			var token = localStorage.getItem('token');
 			var secret = localStorage.getItem('secret');
 
 			var model = {};
 			model["ways"] = pendingWays;
-			model["comment"] = prompt("Please enter a comment for the changeset:", "");
+			model["comment"] = prompt(MSG.prompt_changeset, "");
 			model["token"] = token;
 			model["tokenSecret"] = secret;
 
@@ -376,7 +279,7 @@ function uploadChanges() {
 					if (result.result == "OK") {
 						clearPendingWays();
 						updatePendingWays();
-						showMessageBox("Upload successful");
+						showMessageBox(MSG.info_upload_successful);
 					} else {
 						alert(result.result);
 					}
@@ -388,13 +291,11 @@ function uploadChanges() {
 
 function downloadData() {
 	if (map.getZoom() < 13) {
-		showMessageBox("Please zoom in a little bit more to download data. Current zoom level ("
-				+ map.getZoom() + ")");
+		showMessageBox(MSG.warn_zoom + " (" + map.getZoom() + ")");
 
 	} else {
 
-		if ($.isEmptyObject(pendingWays)
-				|| confirm("You have unsaved changes. By downloading new data your changes will be lost.")) {
+		if ($.isEmptyObject(pendingWays) || confirm(MSG.warn_unsaved_changes)) {
 
 			clearPendingWays();
 			knownWays = {};
@@ -412,18 +313,16 @@ function downloadData() {
 				url : 'downloadData?' + params,
 				dataType : 'json',
 				error : function(event, xhr, options, exc) {
-					alert("Error: " + event.statusText
-							+ "\n\nProbably the current area is too big for "
-							+ "the server.\nTry to zoom in a little.");
+					alert(MSG.error + ": " + event.statusText + "\n\n" + MSG.error_download);
 				},
 				success : function(data) {
 					if (data.geometry.features && data.geometry.features.length) {
 						support = data.support;
 						geojsonLayer.addGeoJSON(data.geometry);
-						showMessageBox(data.geometry.features.length + " objects found.");
+						showMessageBox(data.geometry.features.length + " " + MSG.objects_found);
 						localStorage.setItem("lastData", JSON.stringify(data));
 					} else
-						alert("No objects with problems found. This is good. Congrats!");
+						alert(MSG.info_no_object_found);
 				}
 			});
 		}
@@ -450,9 +349,7 @@ function selectWay(objectId) {
 	$.ajax({
 		url : url,
 		error : function(event, xhr, options, exc) {
-			alert("Error: " + event.statusText
-					+ "\n\n\nThere is a problem with JavaScript permissions.\nMake sure "
-					+ "you can execute scripts within the localhost domain. NoScript active?");
+			alert(MSG.error + ": " + event.statusText + "\n\n\n" + MSG.error_josm);
 		},
 		scusss : function(result, text) {
 			if (text != "success")
@@ -508,7 +405,7 @@ function assertAuthorized() {
 	if (localStorage.getItem('token') && localStorage.getItem('secret')) {
 		return true;
 	} else {
-		alert("Please login with OSM first.");
+		alert(MSG.error_no_tokens);
 		return false;
 	}
 }
@@ -517,20 +414,21 @@ function clearOauth() {
 	localStorage.removeItem("token");
 	localStorage.removeItem("secret");
 	localStorage.removeItem("username");
-	showMessageBox("OAuth tokens deleted");
+	showMessageBox(MSG.info_tokens_deleted);
 	updateOauth('', '', '');
 }
 
 function updateOauth(token, secret, username) {
 	if (window.localStorage) {
+		var myMsg = "";
 		if (token != '') {
 			localStorage.setItem("token", token);
 			localStorage.setItem("secret", secret);
 			localStorage.setItem("username", username ? username : "unknown");
-			showMessageBox("New OAuth tokens received");
+			myMsg += MSG.info_tokens_received;
 
 		} else if (localStorage.getItem('token') && localStorage.getItem('secret')) {
-			showMessageBox("OAuth tokens available.<br>Please read <strong>About</strong> for more information.");
+			myMsg += MSG.info_tokens_available;
 		}
 
 		username = localStorage.getItem('username');
@@ -539,7 +437,7 @@ function updateOauth(token, secret, username) {
 			$('#loginLabel').html('<a href="oauthRequest">User: <b>' + username + '</b></a>');
 			$('#logoutLabel').show();
 		} else {
-			$('#loginLabel').html('<a href="oauthRequest">Login</a>');
+			$('#loginLabel').html('<a href="oauthRequest">' + MSG.menu_login + '</a>');
 			$('#logoutLabel').hide();
 		}
 
@@ -560,16 +458,21 @@ function updateOauth(token, secret, username) {
 			if (lastData.geometry) {
 				support = lastData.support;
 				geojsonLayer.addGeoJSON(lastData.geometry);
-				showMessageBox(lastData.geometry.features.length + " objects found.");
+				if (myMsg != "")
+					myMsg += "<br>";
+				myMsg += lastData.geometry.features.length + " " + MSG.objects_found;
 			}
 		}
 
 		$('#options :radio').on('change', function() {
 			downloadData();
 		});
+		
+		if (myMsg != "")
+			showMessageBox(myMsg);
 
 	} else {
-		alert("Your browser does not support local storage. You won't be able to perform any changes.");
+		alert(MSG.warn_no_localstorage);
 	}
 }
 
@@ -591,18 +494,18 @@ var Location = {
 
 			navigator.geolocation.getCurrentPosition(Location.search, function(error) {
 				if (error.code == 1) {
-					alert("Access not allowed.");
+					alert(MSG.error_geo_no_access);
 				} else if (error.code == 2) {
-					alert("Position cannot be determined.");
+					alert(MSG.error_geo_no_position);
 				} else if (error.core == 3) {
-					alert("No result after 120 seconds. Please try again.");
+					alert(MSG.error_geo_timeout);
 				}
 			}, {
 				timeout : 120000,
 				enableHighAccuracy : true
 			});
 		} else
-			alert("No GEO Location support");
+			alert(MSG.error_geo_no_api);
 	}
 
 };

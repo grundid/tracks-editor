@@ -30,31 +30,48 @@
 	</bean>
 
 
-	<!-- <mvc:interceptors> -->
-	<!-- Injects the current build type as a request attribute -->
-	<!-- <bean class="de.emaitie.webtools.spring.CurrentSystemInjectInterceptor"> 
-		<constructor-arg value="${currentBuild}"></constructor-arg> </bean> -->
-	<!-- Injects the current locale as a request attribute -->
-	<!-- <bean class="de.emaitie.webtools.spring.LocaleInjectInterceptor" /> -->
+	<mvc:interceptors>
+		<!-- Injects the current build type as a request attribute -->
+		<!-- <bean class="de.emaitie.webtools.spring.CurrentSystemInjectInterceptor"> 
+			<constructor-arg value="${currentBuild}"></constructor-arg> </bean> -->
+		<!-- Injects the current locale as a request attribute -->
+		<bean class="org.osmsurround.selective.spring.LocaleInjectInterceptor" />
 
-	<!-- On pre-handle, detect the device that originated the web request -->
-	<!-- <bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" 
-		/> -->
-	<!-- Redirects mobile users to "m.myapp.com". The order of this interceptor 
-		is significant (it should be declared after the DeviceResolverHandlerInterceptor) -->
-	<!-- <bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" 
-		factory-method="mDot"> <constructor-arg value="${siteName}" /> </bean> -->
-	<!-- </mvc:interceptors> -->
+		<!-- On pre-handle, detect the device that originated the web request -->
+		<!-- <bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" 
+			/> -->
+		<!-- Redirects mobile users to "m.myapp.com". The order of this interceptor 
+			is significant (it should be declared after the DeviceResolverHandlerInterceptor) -->
+		<!-- <bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" 
+			factory-method="mDot"> <constructor-arg value="${siteName}" /> </bean> -->
+	</mvc:interceptors>
 
 	<!-- Locale resolver with supported and default locales -->
-	<!-- <bean id="localeResolver" class="de.emaitie.webtools.spring.RequestAndSessionLocaleResolver"> 
-		<constructor-arg index="0"> <bean class="java.util.Locale"> <constructor-arg 
-		value="en" index="0" /> <constructor-arg value="US" index="1" /> </bean> 
-		</constructor-arg> <constructor-arg index="1"> <map> <entry key="de"> <bean 
-		class="java.util.Locale"> <constructor-arg value="de" index="0" /> <constructor-arg 
-		value="DE" index="1" /> </bean> </entry> <entry key="en"> <bean class="java.util.Locale"> 
-		<constructor-arg value="en" index="0" /> <constructor-arg value="US" index="1" 
-		/> </bean> </entry> </map> </constructor-arg> </bean> -->
+	<bean id="localeResolver"
+		class="org.osmsurround.selective.spring.RequestAndSessionLocaleResolver">
+		<constructor-arg index="0">
+			<bean class="java.util.Locale">
+				<constructor-arg value="en" index="0" />
+				<constructor-arg value="US" index="1" />
+			</bean>
+		</constructor-arg>
+		<constructor-arg index="1">
+			<map>
+				<entry key="de">
+					<bean class="java.util.Locale">
+						<constructor-arg value="de" index="0" />
+						<constructor-arg value="DE" index="1" />
+					</bean>
+				</entry>
+				<entry key="en">
+					<bean class="java.util.Locale">
+						<constructor-arg value="en" index="0" />
+						<constructor-arg value="US" index="1" />
+					</bean>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -76,7 +93,6 @@
 		<constructor-arg index="1" value="${consumerKey}" />
 		<constructor-arg index="2" value="${consumerSecret}" />
 	</bean>
-
 
 	<bean class="org.osmtools.overpass.OverpassTemplate">
 		<constructor-arg ref="restTemplate"></constructor-arg>

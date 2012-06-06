@@ -5,8 +5,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>OSM QA Editor</title>
+<title><spring:message code="app.name" /></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="favicon.ico" />
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="rs/leaflet/leaflet.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="<path_to_dist>/leaflet.ie.css" /><![endif]-->
@@ -60,6 +61,8 @@ form {
 <script src="rs/leaflet/leaflet-src.js"></script>
 <script src="rs/jquery-1.7.2.min.js"></script>
 <script src="rs/bootstrap/js/bootstrap.js"></script>
+<script src="rs/messages-${currentLocaleLanguage}.js"></script>
+<script src="rs/templates.js"></script>
 </head>
 <body>
 	<div style="height: 100%; position: relative;">
@@ -68,37 +71,37 @@ form {
 				<div class="container">
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span>
-					</a> <a class="brand" href="#">OSM QA Editor</a>
+					</a> <a class="brand" href="#"><spring:message code="app.name" /></a>
 					<ul class="nav">
 						<li><a href="#" onclick="downloadData();"><i class="icon-download icon-white"></i><span
-								class="visible-desktop">&nbsp;Download OSM Data</span></a></li>
+								class="visible-desktop">&nbsp;<spring:message code="menu.download.data" /></span></a></li>
 						<li><a href="#" onclick="uploadChanges();"><i class="icon-upload icon-white"></i><span
-								class="visible-desktop">&nbsp;Upload changes</span><span id="changesSpan"></span></a></li>
+								class="visible-desktop">&nbsp;<spring:message code="menu.upload.changes" /></span><span id="changesSpan"></span></a></li>
 						<li><a href="#" onclick="Location.findMe();"><i class="icon-screenshot icon-white"></i><span
-								class="visible-desktop">&nbsp;Locate me</span></a></li>
+								class="visible-desktop">&nbsp;<spring:message code="menu.locate.me" /></span></a></li>
 					</ul>
 					<ul class="nav pull-right">
-						<li id="loginLabel"><a href="oauthRequest">Login</a></li>
-						<li id="logoutLabel" style="display: none"><a href="#" onclick="clearOauth();">Logout</a></li>
-						<li><a data-toggle="modal" href="#aboutDialog">About</a></li>
+						<li id="loginLabel"><a href="oauthRequest"><spring:message code="menu.login" /></a></li>
+						<li id="logoutLabel" style="display: none"><a href="#" onclick="clearOauth();"><spring:message code="menu.logout" /></a></li>
+						<li><a data-toggle="modal" href="#aboutDialog"><spring:message code="menu.about" /></a></li>
 					</ul>
 					<div class="nav-collapse">
 						<form id="options">
 							<ul class="nav">
-								<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#">Options <b
+								<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><spring:message code="menu.options" /> <b
 										class="caret"></b></a>
 									<ul class="dropdown-menu">
 										<li><a href="#"><label><input style="display: inline" type="checkbox" checked="checked"
-													value="true" name="overpass">&nbsp; Use Overpass API</label></a></li>
+													value="true" name="overpass">&nbsp;<spring:message code="options.overpass" /></label></a></li>
 										<li class="divider"></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
-													value="noTracktype" checked="checked">&nbsp;Show tracks without tracktype</label></a></li>
+													value="noTracktype" checked="checked">&nbsp;<spring:message code="options.notracktype" /></label></a></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
-													value="noSurface">&nbsp;Show tracks without surface</label></a></li>
+													value="noSurface">&nbsp;<spring:message code="options.nosurface" /></label></a></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
-													value="noAddress">&nbsp;Show buildings without address</label></a></li>
+													value="noAddress">&nbsp;<spring:message code="options.noaddress" /></label></a></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
-													value="noNameResidential">&nbsp;Show residential without name</label></a></li>
+													value="noNameResidential">&nbsp;<spring:message code="options.nonameresidential" /></label></a></li>
 									</ul></li>
 							</ul>
 						</form>
@@ -109,7 +112,7 @@ form {
 			<div id="loading" style="display: none" class="alert"></div>
 			<div id="messageBox" style="display: none" class="alert alert-info">
 				<button class="close" data-dismiss="alert">×</button>
-				<span>Hello</span>
+				<span></span>
 			</div>
 		</div>
 		<div class="container-fluid" style="height: 100%; position: relative;">
@@ -121,37 +124,13 @@ form {
 	<div class="modal" id="aboutDialog" style="display: none">
 		<div class="modal-header">
 			<button class="close" data-dismiss="modal">×</button>
-			<h3>About OSM QA Editor</h3>
+			<h3><spring:message code="about.title" /></h3>
 		</div>
 		<div class="modal-body">
-			<p>
-				This tool will download and show you different problematic objects, like tracks <b>without a <a
-					href="http://wiki.openstreetmap.org/wiki/Key:tracktype" target="_blank">tracktype tag</a></b> or buildings without an
-				address in the current view . After data download click on a colored object to see the details and modify them.
-			</p>
-			<p>To edit objects in this editor please press the login button and authorize the QA Editor to be able to edit
-				ways unter your OSM username.</p>
-			<p>
-				<strong>Note:</strong> the access tokens will be stored in your current browser. Do not use this function on a
-				public computer or at least delete the tokens by pressing the "Logout" button.
-			</p>
-			<p>You can also use JOSM to edit objects. Press the "open in JOSM" button for that. Please download the same area
-				in JOSM first.</p>
-
-			<p>
-				The QA Editor downloads objects via <a href="http://www.overpass-api.de" target="_blank">Openpass API</a> by
-				default. Please note that this API is some minutes behind the OSM server. If you download the same region after
-				having uploaded your changes you might see that the objects are still unchanged. Please wait a few minutes or disable
-				the Overpass API in the options menu in this case.
-			</p>
-			<p>
-				Created by <a href="http://www.openstreetmap.org/user/nitegate">nitegate</a> (<a href="http://www.grundid.de">GrundID
-					GmbH</a>), Data by <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
-			</p>
-			<p>Powered by Leaflet, Bootstrap, jQuery, osm-tools. Source code at: <a href="https://github.com/grundid/tracks-editor">GitHub</a>.
+		<spring:message code="about.content" htmlEscape="false" />
 		</div>
 		<div class="modal-footer">
-			<a href="#" class="btn" onclick="$('#aboutDialog').modal('hide');">Close</a>
+			<a href="#" class="btn" onclick="$('#aboutDialog').modal('hide');"><spring:message code="about.close.button" /></a>
 		</div>
 	</div>
 	<div id="dialogContainer"></div>

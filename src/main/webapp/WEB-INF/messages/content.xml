@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="app.name">OSM QA Editor</entry>
+	<entry key="menu.download.data">Download OSM Data</entry>
+	<entry key="menu.upload.changes">Upload changes</entry>
+	<entry key="menu.locate.me">Locate me</entry>
+	<entry key="menu.login">Login</entry>
+	<entry key="menu.logout">Logout</entry>
+	<entry key="menu.about">About</entry>
+	<entry key="menu.options">Options</entry>
+	<entry key="options.overpass">Use Overpass API</entry>
+	<entry key="options.notracktype">Show tracks without tracktype</entry>
+	<entry key="options.nosurface">Show tracks without surface</entry>
+	<entry key="options.noaddress">Show buildings without address</entry>
+	<entry key="options.nonameresidential">Show residential without name</entry>
+	<entry key="about.title">About OSM QA Editor</entry>
+	<entry key="about.close.button">Close</entry>
+	<entry key="about.content"><![CDATA[
+				<p>
+				This tool will download and show you different problematic objects, like tracks <b>without a <a
+					href="http://wiki.openstreetmap.org/wiki/Key:tracktype" target="_blank">tracktype tag</a></b> or buildings without an
+				address in the current view . After data download click on a colored object to see the details and modify them.
+			</p>
+			<p>To edit objects in this editor please press the login button and authorize the QA Editor to be able to edit
+				ways unter your OSM username.</p>
+			<p>
+				<strong>Note:</strong> the access tokens will be stored in your current browser. Do not use this function on a
+				public computer or at least delete the tokens by pressing the "Logout" button.
+			</p>
+			<p>You can also use JOSM to edit objects. Press the "open in JOSM" button for that. Please download the same area
+				in JOSM first.</p>
+
+			<p>
+				The QA Editor downloads objects via <a href="http://www.overpass-api.de" target="_blank">Openpass API</a> by
+				default. Please note that this API is some minutes behind the OSM server. If you download the same region after
+				having uploaded your changes you might see that the objects are still unchanged. Please wait a few minutes or disable
+				the Overpass API in the options menu in this case.
+			</p>
+			<p>
+				Created by <a href="http://www.openstreetmap.org/user/nitegate">nitegate</a> (<a href="http://www.grundid.de">GrundID
+					GmbH</a>), Data by <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
+			</p>
+			<p>Powered by Leaflet, Bootstrap, jQuery, osm-tools. Source code at: <a href="https://github.com/grundid/tracks-editor">GitHub</a>.</p>
+	]]></entry>
+</properties>
