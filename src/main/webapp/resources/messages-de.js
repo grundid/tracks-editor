@@ -31,8 +31,8 @@ var MSG = {
 	warn_unsaved_changes : "Du hast nicht gespeicherte Änderungen. Beim Downloaden neuer Daten gehen deine Änderungen verloren.",
 	error : "Fehler",
 	error_download : "Das aktuelle Gebiet ist wahrscheinlich zu groß für den Server.\nVersuche bitte weiter rein zu zoomen oder verkleinere bitte dein Browserfenster.",
-	error_jsom : "Es gibt ein Problem mit JavaScript Berechtigungen.\nStelle bitte sichert, dass du JavaScript innerhalb der localhost domain Domain ausführen kannst. Ist vielleicht NoScript aktiv?",
-	error_no_tokens : "Bitte logge dich beim OSM Server zuerst ein.",
+	error_jsom : "Es gibt ein Problem mit JavaScript Berechtigungen.\nStelle bitte sicher, dass du JavaScript innerhalb der localhost Domain ausführen kannst. Ist vielleicht NoScript aktiv?",
+	error_no_tokens : "Bitte logge dich zuerst beim OSM Server ein.",
 
 	error_geo_no_access : "Zugriff nicht erlaubt.",
 	error_geo_no_position : "Position kann nicht ermittelt werden.",
