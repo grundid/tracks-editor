@@ -4,6 +4,13 @@ var support = null;
 var pendingWays = {};
 var knownWays = {};
 
+var options = {
+	token : '',
+	secret : '',
+	username : '',
+	mobile : false
+};
+
 var map = new L.Map('map', {
 	center : new L.LatLng(49.30, 9.19),
 	zoom : 8
@@ -68,12 +75,21 @@ geojsonLayer.on("featureparse", function(e) {
 			layer.setStyle(props.style);
 		});
 
+		if (options.mobile) {
+			e.layer.on("click", function(e) {
+				$('body').append(createEditorPopup(props));
+				addTypeAheadFields(props.objectId);
+			});
+		}
+
 	})(e.layer, e.properties);
 
-	if (e.properties && e.properties.objectId) {
-		e.layer.bindPopup(createEditorPopup(e.properties), {
-			objectId : e.properties.objectId
-		});
+	if (!options.mobile) {
+		if (e.properties && e.properties.objectId) {
+			e.layer.bindPopup(createEditorPopup(e.properties), {
+				objectId : e.properties.objectId
+			});
+		}
 	}
 });
 
@@ -128,13 +144,8 @@ function createFieldElement(x, currentField, props) {
 }
 
 function createEditorPopup(props) {
-
-	var tags = "";
-	for ( var tag in props.tags) {
-		tags += tag + "=" + props.tags[tag] + "<br>";
-	}
-
-	var elem = $('<div style="margin:10px;width:300px;" />');
+	var elem = (options.mobile) ? $('<div id="fullScreenEditor" style="position:absolute;left:0;top:0;width:100%;height:100%;background-color:white;z-index:100" />')
+			: $('<div style="margin:10px;width:300px;" />');
 
 	elem.append('<h6><a href="http://www.openstreetmap.org/browse/way/' + props.objectId
 			+ '" target="osmWay">Way ID ' + props.objectId + '</a></h6>');
@@ -146,9 +157,10 @@ function createEditorPopup(props) {
 	var fields = templates[props.objectType];
 	var requiredFields = [];
 	var fieldset = $('<fieldset />');
-	fieldset.append("<h6>Change properties</h6>");
+	fieldset.append('<h6>'+MSG.title_change_properties+'</h6>');
 
-	var fieldsetDiv = $('<div class="fieldset-fields" style="max-height:280px;overflow-y:scroll;margin-bottom:5px" />');
+	var fieldsetDiv = (options.mobile) ? $('<div class="fieldset-fields" style="overflow-y:scroll;left:5px;right:0px;position:absolute;bottom:60px;top:40px" />')
+			: $('<div class="fieldset-fields" style="max-height:280px;overflow-y:scroll;margin-bottom:5px" />');
 	var x = 0;
 	for ( var tag in fields) {
 		x++;
@@ -170,19 +182,24 @@ function createEditorPopup(props) {
 	}
 	fieldset.append(fieldsetDiv);
 	form.append(fieldset);
-	form
-			.append('<div style="margin-top:5px">'
-					+ '<button type="button" class="btn btn-small btn-primary" onclick="saveWay(this.form);">'
-					+ MSG.button_save
-					+ '</button>&nbsp;'
-					+ '<button type="button" class="btn btn-small" onclick="cancelPopup(this.form);">'
-					+ MSG.button_cancel
-					+ '</button>&nbsp;'
-					+ '<button type="button" class="btn btn-small" onclick="addTag(this.form);" title="'
-					+ MSG.button_add_tag_title + '">' + MSG.button_add_tag + '</button>&nbsp;'
-					+ '<button type="button" class="btn btn-small" onclick="selectWay('
-					+ props.objectId + ');" title="' + MSG.button_josm_title + '">'
-					+ MSG.button_josm + '</button></div>');
+	var bottomBar = options.mobile ? $('<div class="modal-footer" style="position:absolute;height:30px;bottom: 0px;left:0px;right:0px" />')
+			: $('<div style="margin-top:5px" />');
+	bottomBar
+			.append('<button type="button" class="btn btn-small btn-primary" onclick="saveWay(this.form);">'
+					+ MSG.button_save + '</button>&nbsp;');
+	bottomBar
+			.append('<button type="button" class="btn btn-small" onclick="cancelPopup(this.form);">'
+					+ MSG.button_cancel + '</button>&nbsp;');
+	bottomBar
+			.append('<button type="button" class="btn btn-small" onclick="addTag(this.form);" title="'
+					+ MSG.button_add_tag_title + '">' + MSG.button_add_tag + '</button>&nbsp;');
+	if (!options.mobile) {
+		bottomBar.append('<button type="button" class="btn btn-small" onclick="selectWay('
+				+ props.objectId + ');" title="' + MSG.button_josm_title + '">' + MSG.button_josm
+				+ '</button>');
+	}
+
+	form.append(bottomBar);
 	elem.append(form);
 	return $('<div class="modal-body" />').html(elem).html();
 }
@@ -190,7 +207,10 @@ function createEditorPopup(props) {
 function cancelPopup(form) {
 	var objectId = $(form).find("[name=objectId]").val();
 	var knownWay = knownWays[objectId];
-	map.closePopup(knownWay.layer._popup);
+	if (options.mobile)
+		$('#fullScreenEditor').remove();
+	else
+		map.closePopup(knownWay.layer._popup);
 }
 
 function addTag(form) {
@@ -229,7 +249,10 @@ function saveWay(form) {
 
 		knownWay.layer.setStyle(knownWay.properties.style);
 
-		map.closePopup(knownWay.layer._popup);
+		if (options.mobile)
+			$('#fullScreenEditor').remove();
+		else
+			map.closePopup(knownWay.layer._popup);
 		updatePendingWays();
 	}
 }
@@ -359,6 +382,19 @@ function selectWay(objectId) {
 
 }
 
+function addTypeAheadFields(objectId) {
+	$('#form_' + objectId).find(':input').each(function() {
+		var elem = $(this);
+		var name = $(this).attr("name");
+		if (support[name]) {
+			elem.typeahead({
+				'source' : support[name]
+			});
+		}
+	});
+	
+}
+
 $.ajaxSetup({
 	complete : function(event, xhr, options, exc) {
 		$('#downloadButton').removeAttr("disabled");
@@ -380,16 +416,7 @@ map.on("popupopen", function(clickEvent) {
 			elem.val(value);
 		}
 	}
-	$('#form_' + objectId).find(':input').each(function() {
-		var elem = $(this);
-		var name = $(this).attr("name");
-		if (support[name]) {
-			elem.typeahead({
-				'source' : support[name]
-			});
-		}
-	});
-
+	addTypeAheadFields(objectId);
 });
 map.on("moveend", function(moveEvent) {
 	if (window.localStorage) {
@@ -415,29 +442,31 @@ function clearOauth() {
 	localStorage.removeItem("secret");
 	localStorage.removeItem("username");
 	showMessageBox(MSG.info_tokens_deleted);
-	updateOauth('', '', '');
+	initEditor(options);
 }
 
-function updateOauth(token, secret, username) {
+function initEditor(newOptions) {
+	$.extend(options, newOptions);
 	if (window.localStorage) {
 		var myMsg = "";
-		if (token != '') {
-			localStorage.setItem("token", token);
-			localStorage.setItem("secret", secret);
-			localStorage.setItem("username", username ? username : "unknown");
+		if (options.token != '') {
+			localStorage.setItem("token", options.token);
+			localStorage.setItem("secret", options.secret);
+			localStorage.setItem("username", options.username ? options.username : "unknown");
 			myMsg += MSG.info_tokens_received;
 
 		} else if (localStorage.getItem('token') && localStorage.getItem('secret')) {
 			myMsg += MSG.info_tokens_available;
 		}
 
-		username = localStorage.getItem('username');
+		options.username = localStorage.getItem('username');
 
-		if (username && username != '') {
-			$('#loginLabel').html('<a href="oauthRequest">User: <b>' + username + '</b></a>');
+		if (options.username && options.username != '') {
+			$('#loginLabel').html(
+					'<a href="oauthRequest"><i class="icon-user icon-white"></i><span class="visible-desktop">&nbsp;<b>' + options.username + '</b></span></a>');
 			$('#logoutLabel').show();
 		} else {
-			$('#loginLabel').html('<a href="oauthRequest">' + MSG.menu_login + '</a>');
+			$('#loginLabel').html('<a href="oauthRequest"><i class="icon-user icon-white"></i><span class="visible-desktop">&nbsp;<b>' + MSG.menu_login + '</b></span></a>');
 			$('#logoutLabel').hide();
 		}
 
@@ -467,7 +496,7 @@ function updateOauth(token, secret, username) {
 		$('#options :radio').on('change', function() {
 			downloadData();
 		});
-		
+
 		if (myMsg != "")
 			showMessageBox(myMsg);
 

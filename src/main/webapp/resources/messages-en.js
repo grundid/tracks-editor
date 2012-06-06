@@ -6,6 +6,7 @@ var MSG = {
 	button_add_tag_title : "Add new tag",
 	button_josm_title : "Open current object in JOSM",
 
+	title_change_properties : "Change properties",
 	tag_addr_street : "Street",
 	tag_addr_housenumber : "Housenumber",
 	tag_addr_postcode : "Postcode",

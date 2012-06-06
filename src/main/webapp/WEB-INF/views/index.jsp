@@ -25,6 +25,10 @@ form {
 	margin: 0px;
 }
 
+label {
+	color: inherit !important;
+}
+
 .modal {
 	max-height: 800px !important;
 }
@@ -43,6 +47,10 @@ form {
 	display: inline !important;
 }
 
+.form-horizontal .control-group>label {
+	float: left !important;
+}
+
 .form-horizontal .control-label {
 	width: 100px !important;
 	overflow: hidden;
@@ -55,6 +63,20 @@ form {
 .form-horizontal .controls {
 	margin-left: 110px;
 }
+
+.navbar-fixed-top,.navbar-fixed-bottom {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.navbar-fixed-top .navbar-inner {
+	padding: 0px;
+}
+
+<c:if test="${currentDevice.mobile}">
+.leaflet-control-attribution {
+	display: none;
+}</c:if>
 </style>
 
 <!-- Leaflet JavaScript -->
@@ -66,12 +88,12 @@ form {
 </head>
 <body>
 	<div style="height: 100%; position: relative;">
-		<div class="navbar navbar-fixed-top" style="position: fixed; z-index: 10000; margin-bottom: 0px">
+		<div class="navbar navbar-fixed-top" style="position: fixed; z-index: 10; margin-bottom: 0px">
 			<div class="navbar-inner">
 				<div class="container">
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span>
-					</a> <a class="brand" href="#"><spring:message code="app.name" /></a>
+					</a> <a class="brand" href="#"><span class="hidden-phone"><spring:message code="app.name" /></span></a>
 					<ul class="nav">
 						<li><a href="#" onclick="downloadData();"><i class="icon-download icon-white"></i><span
 								class="visible-desktop">&nbsp;<spring:message code="menu.download.data" /></span></a></li>
@@ -81,15 +103,19 @@ form {
 								class="visible-desktop">&nbsp;<spring:message code="menu.locate.me" /></span></a></li>
 					</ul>
 					<ul class="nav pull-right">
-						<li id="loginLabel"><a href="oauthRequest"><spring:message code="menu.login" /></a></li>
-						<li id="logoutLabel" style="display: none"><a href="#" onclick="clearOauth();"><spring:message code="menu.logout" /></a></li>
-						<li><a data-toggle="modal" href="#aboutDialog"><spring:message code="menu.about" /></a></li>
+						<li id="loginLabel"><a href="oauthRequest"><i class="icon-user icon-white"></i><span
+								class="visible-desktop">&nbsp;<spring:message code="menu.login" /></span></a></li>
+						<li id="logoutLabel" style="display: none"><a href="#" onclick="clearOauth();"><i
+								class="icon-share-alt icon-white"></i><span class="visible-desktop">&nbsp;<spring:message
+										code="menu.logout" /></span></a></li>
+						<li><a data-toggle="modal" href="#aboutDialog" title="<spring:message code="menu.about" />"><i
+								class="icon-question-sign icon-white"></i></a></li>
 					</ul>
 					<div class="nav-collapse">
 						<form id="options">
 							<ul class="nav">
-								<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><spring:message code="menu.options" /> <b
-										class="caret"></b></a>
+								<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><spring:message
+											code="menu.options" /> <b class="caret"></b></a>
 									<ul class="dropdown-menu">
 										<li><a href="#"><label><input style="display: inline" type="checkbox" checked="checked"
 													value="true" name="overpass">&nbsp;<spring:message code="options.overpass" /></label></a></li>
@@ -124,10 +150,12 @@ form {
 	<div class="modal" id="aboutDialog" style="display: none">
 		<div class="modal-header">
 			<button class="close" data-dismiss="modal">×</button>
-			<h3><spring:message code="about.title" /></h3>
+			<h3>
+				<spring:message code="about.title" />
+			</h3>
 		</div>
 		<div class="modal-body">
-		<spring:message code="about.content" htmlEscape="false" />
+			<spring:message code="about.content" htmlEscape="false" />
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="btn" onclick="$('#aboutDialog').modal('hide');"><spring:message code="about.close.button" /></a>
@@ -136,7 +164,13 @@ form {
 	<div id="dialogContainer"></div>
 	<script src="rs/tracks-editor.js"></script>
 	<script type="text/javascript">
-		updateOauth('${oauthTokens.token}', '${oauthTokens.tokenSecret}', '${osmUser.displayName}');
+		initEditor({
+			token : '${oauthTokens.token}',
+			secret : '${oauthTokens.tokenSecret}',
+			username : '${osmUser.displayName}',
+			mobile : ${currentDevice.mobile},
+			mobile_fake : true
+		});
 	</script>
 </body>
 </html>

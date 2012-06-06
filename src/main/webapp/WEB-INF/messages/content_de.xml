@@ -13,7 +13,7 @@
 	<entry key="options.notracktype">Zeige tracks ohne tracktype</entry>
 	<entry key="options.nosurface">Zeige tracks ohne surface</entry>
 	<entry key="options.noaddress">Zeige Gebäude ohne Adresse</entry>
-	<entry key="options.nonameresidential">Zeige Straßen in Wohngebiete ohne Namen</entry>
+	<entry key="options.nonameresidential">Zeige Straßen in Wohngebieten ohne Namen</entry>
 	<entry key="about.title">Über OSM QA Editor</entry>
 	<entry key="about.close.button">Schließen</entry>
 	<entry key="about.content"><![CDATA[
