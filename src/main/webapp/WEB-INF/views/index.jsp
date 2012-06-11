@@ -6,7 +6,7 @@
 <html>
 <head>
 <title><spring:message code="app.name" /></title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  user-scalable=no">
 <link rel="shortcut icon" href="favicon.ico" />
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="rs/leaflet/leaflet.css" />
