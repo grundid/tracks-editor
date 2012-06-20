@@ -69,6 +69,12 @@
 						<constructor-arg value="US" index="1" />
 					</bean>
 				</entry>
+				<entry key="tr">
+					<bean class="java.util.Locale">
+						<constructor-arg value="tr" index="0" />
+						<constructor-arg value="TR" index="1" />
+					</bean>
+				</entry>
 			</map>
 		</constructor-arg>
 	</bean>
