@@ -75,6 +75,18 @@
 						<constructor-arg value="TR" index="1" />
 					</bean>
 				</entry>
+				<entry key="ro">
+					<bean class="java.util.Locale">
+						<constructor-arg value="ro" index="0" />
+						<constructor-arg value="RO" index="1" />
+					</bean>
+				</entry>
+				<entry key="pt">
+					<bean class="java.util.Locale">
+						<constructor-arg value="pt" index="0" />
+						<constructor-arg value="PT" index="1" />
+					</bean>
+				</entry>
 			</map>
 		</constructor-arg>
 	</bean>

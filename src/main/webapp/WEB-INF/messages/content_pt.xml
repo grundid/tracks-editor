@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="app.name">OSM QA Editor</entry>
+	<entry key="menu.download.data">Carregar dados</entry>
+	<entry key="menu.upload.changes">Enviar alterações</entry>
+	<entry key="menu.locate.me">Localizar-me</entry>
+	<entry key="menu.login">Entrar</entry>
+	<entry key="menu.logout">Sair</entry>
+	<entry key="menu.about">Acerca de</entry>
+	<entry key="menu.options">Opções</entry>
+	<entry key="options.overpass">Usar Overpass API</entry>
+	<entry key="options.notracktype">Mostrar trilhos sem tracktype</entry>
+	<entry key="options.nosurface">Mostrar trilhos sem superfície</entry>
+	<entry key="options.noaddress">Mostrar edifícios sem morada</entry>
+	<entry key="options.nonameresidential">Mostrar highway=residential sem nome</entry>
+	<entry key="about.title">Acerca de OSM QA Editor</entry>
+	<entry key="about.close.button">Fechar</entry>
+	<entry key="about.content"><![CDATA[
+				<p>
+				Esta ferramenta irá carregar e mostrar diferentes obetos problemáticos, como trilhos <b>sem uma <a
+					href="http://wiki.openstreetmap.org/wiki/Key:tracktype" target="_blank">etiqueta tracktype</a></b> ou edificios sem uma
+				morada na vista atual . Depois de carregada a informação dar um clique num objeto colorido para ver os detalhes e modifica-los.
+			</p>
+			<p>Para editar objetos no editor por favor carregue no botão para entrar e autorize o QA Editor a editar
+				caminhos com o seu nome de utilizador OSM.</p>
+			<p>
+				<strong>Nota:</strong> os símbolo de acesso serão guardados no seu navegador atual. Não utilize esta função num
+				computador público ou remova os símbolos carregando no botão "Sair".
+			</p>
+			<p>Também pode usar o JOSM para editar objetos. Carregue em "abrir com o JOSM". Por favor primeiro carregue a mesma área
+				no JOSM.</p>
+
+			<p>
+				O QA Editor carrega objetos por defeito via <a href="http://www.overpass-api.de" target="_blank">Openpass API</a>
+				. Por favor note que esta API encontra-se alguns minutos atrás em relação ao servidor OSM. Se carregar a mesma região depois
+				de ter efetuado o envio das alterações pode verificar que os objetos ainda se encontram inalterados. Por favor espere alguns minutos ou desative
+				o Overpass API no menu de opções.
+			</p>
+			<p>
+				Criado por <a href="http://www.openstreetmap.org/user/nitegate">nitegate</a> (<a href="http://www.grundid.de">GrundID
+					GmbH</a>), Dados por <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
+			</p>
+			<p>Powered by Leaflet, Bootstrap, jQuery, osm-tools. Source code at: <a href="https://github.com/grundid/tracks-editor">GitHub</a>.</p>
+	]]></entry>
+</properties>

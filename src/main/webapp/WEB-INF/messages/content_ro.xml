@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="app.name">Editor OSM QA</entry>
+	<entry key="menu.download.data">Descarca date</entry>
+	<entry key="menu.upload.changes">Incarca modificari</entry>
+	<entry key="menu.locate.me">Localizeaza-ma</entry>
+	<entry key="menu.login">Conectare</entry>
+	<entry key="menu.logout">Deconectare</entry>
+	<entry key="menu.about">Despre</entry>
+	<entry key="menu.options">Optiuni</entry>
+	<entry key="options.overpass">Foloseste Overpass API</entry>
+	<entry key="options.notracktype">Arata trasee fara tracktype</entry>
+	<entry key="options.nosurface">Arata trasee fara surface</entry>
+	<entry key="options.noaddress">Arata edificii fara adresa</entry>
+	<entry key="options.nonameresidential">Arata highway=residential fara nume</entry>
+	<entry key="about.title">Despre Editorul OSM QA</entry>
+	<entry key="about.close.button">Inchideti</entry>
+	<entry key="about.content"><![CDATA[
+			<p>
+			Dieses Tool kann bestimmte problematische Objekte vom OSM Server downloaden und zum Editieren anzeigen.
+			Dies können beispielsweise tracks <b>ohne <a href="http://wiki.openstreetmap.org/wiki/Key:tracktype" target="_blank">tracktype tag</a></b> 
+			sein oder Gebäude ohne eine Adresse. Der Download Bereich bezieht sich immer auf den sichtbaren Fensterbereich.
+			Nach dem Download klicke einfach auf das farbliche Objekt und modifiziere es entsprechend.
+			</p>
+			<p>Bitte logge dich vor dem Berarbeiten beim OSM Server ein unter der Verwendung des Login Buttons um den QA Editor 
+			für Änderungen in deinem Namen zu authorizieren.</p>
+			<p>
+			<strong>Hinweis:</strong> Die Zugangs-Token (nicht das Passwort) werden auf deinem Computer gespeichert. Verwende deshalb diese Funktion nicht auf 
+			öffentlichen Computern oder Lösche die Zugangsdaten durch einen Klick auf "Logout".
+			</p>
+			<p>Du kannst auch Objekte mit JOSM verändern. Klicke dazu den Button "In JOSM öffnen". Lade bitte vorher noch die entsprechende Gegend in JOSM herunter.</p>
+
+			<p>Der QA Editor lädt standardmässig Objekte über die <a href="http://www.overpass-api.de" target="_blank">Overpass API</a> herunter. 
+			   Bitte beachte, dass dieser Server die OSM Daten mit ein paar Minuten Verzögerung synchronisiert.
+			   Wenn du also gleich nach einem Upload auch einen Download derselben Daten durchführst, werden deine Änderungen nicht sichtbar sein.
+			   Warte in diesem Fall einfach ein paar Minuten.
+			</p>
+			<p>
+			Erstellt von <a href="http://www.openstreetmap.org/user/nitegate">nitegate</a> (<a href="http://www.grundid.de">GrundID
+			GmbH</a>), Data by <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
+			</p>
+			<p>Powered by Leaflet, Bootstrap, jQuery, osm-tools. Source code: <a href="https://github.com/grundid/tracks-editor">GitHub</a>.</p>
+	]]></entry>
+</properties>
