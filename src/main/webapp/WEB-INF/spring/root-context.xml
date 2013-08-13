@@ -87,6 +87,12 @@
 						<constructor-arg value="PT" index="1" />
 					</bean>
 				</entry>
+				<entry key="sl">
+					<bean class="java.util.Locale">
+						<constructor-arg value="sl" index="0" />
+						<constructor-arg value="SL" index="1" />
+					</bean>
+				</entry>
 			</map>
 		</constructor-arg>
 	</bean>
