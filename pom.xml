@@ -94,14 +94,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.osmtools</groupId>
+			<groupId>de.grundid.osmtools</groupId>
 			<artifactId>osm-tools-formats</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0.M3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.osmtools</groupId>
+			<groupId>de.grundid.osmtools</groupId>
 			<artifactId>osm-tools-api</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0.M3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -147,29 +147,6 @@
 			</build>
 		</profile>
 	</profiles>
-
-	<repositories>
-		<repository>
-			<id>releases.grundid.de</id>
-			<url>http://maven.grundid.de/releases</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>snapshots.grundid.de</id>
-			<url>http://maven.grundid.de/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 	<distributionManagement>
 		<repository>
