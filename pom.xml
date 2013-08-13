@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.osmsurround</groupId>
 	<artifactId>tracks-editor</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<packaging>war</packaging>
 
 	<properties>
@@ -13,14 +12,14 @@
 		<org.slf4j-version>1.6.4</org.slf4j-version>
 		<java-version>1.6</java-version>
 		<config.build.type>DEV</config.build.type>
-		<config.site.name></config.site.name>
-		<config.db.driver.class.name></config.db.driver.class.name>
-		<config.db.url></config.db.url>
-		<config.db.username></config.db.username>
-		<config.db.password></config.db.password>
-		<config.mail.hostname></config.mail.hostname>
-		<config.mail.username></config.mail.username>
-		<config.mail.password></config.mail.password>
+		<config.site.name />
+		<config.db.driver.class.name />
+		<config.db.url />
+		<config.db.username />
+		<config.db.password />
+		<config.mail.hostname />
+		<config.mail.username />
+		<config.mail.password />
 		<osm.api.base.url>http://api.openstreetmap.org</osm.api.base.url>
 		<oauth.requestTokenEndpointUrl>http://www.openstreetmap.org/oauth/request_token</oauth.requestTokenEndpointUrl>
 		<oauth.accessTokenEndpointUrl>http://www.openstreetmap.org/oauth/access_token</oauth.accessTokenEndpointUrl>
@@ -161,7 +160,8 @@
 
 	<scm>
 		<developerConnection>scm:git:ssh://git@github.com/grundid/tracks-editor.git</developerConnection>
-	</scm>
+	  <tag>tracks-editor-1.0</tag>
+  </scm>
 
 	<build>
 		<pluginManagement>
