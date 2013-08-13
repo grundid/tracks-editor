@@ -181,6 +181,7 @@
 					<configuration>
 						<useReleaseProfile>false</useReleaseProfile>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<arguments>-Pbuild-prd,osm-prd</arguments>
 					</configuration>
 				</plugin>
 			</plugins>
