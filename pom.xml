@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.osmsurround</groupId>
 	<artifactId>tracks-editor</artifactId>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.2</version>
 	<packaging>war</packaging>
 
 	<properties>
@@ -160,7 +160,7 @@
 
 	<scm>
 		<developerConnection>scm:git:ssh://git@github.com/grundid/tracks-editor.git</developerConnection>
-	  <tag>HEAD</tag>
+	  <tag>tracks-editor-1.2</tag>
   </scm>
 
 	<build>
