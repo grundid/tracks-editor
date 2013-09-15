@@ -1,17 +1,20 @@
 package org.osmsurround.selective.template;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.geojson.GeoJsonObject;
+import org.geojson.LineString;
+import org.geojson.LngLatAlt;
+import org.geojson.Polygon;
 import org.osm.schema.Osm;
 import org.osm.schema.OsmNd;
 import org.osm.schema.OsmNode;
 import org.osm.schema.OsmWay;
 import org.osmsurround.selective.data.SearchConfig;
-import org.osmtools.geojson.Geometry;
-import org.osmtools.geojson.LineString;
-import org.osmtools.geojson.Polygon;
 
 public class ConverterContext {
 
@@ -19,7 +22,6 @@ public class ConverterContext {
 	private Osm osm;
 	private String objectType;
 	private SearchConfig searchConfig;
-
 	private Map<String, Object> support = new HashMap<String, Object>();
 
 	public ConverterContext(Osm osm, String objectType, SearchConfig searchConfig) {
@@ -31,22 +33,25 @@ public class ConverterContext {
 		}
 	}
 
-	public Geometry createPolygon(OsmWay osmWay) {
+	public GeoJsonObject createPolygon(OsmWay osmWay) {
 		Polygon geometry = new Polygon();
-		for (OsmNd nd : osmWay.getNd()) {
-			OsmNode node = nodes.get(nd.getRef());
-			geometry.addCoordinates(node.getLon(), node.getLat());
-		}
+		geometry.add(createPoints(osmWay));
 		return geometry;
 	}
 
-	public Geometry createLineString(OsmWay osmWay) {
-		LineString geometry = new LineString();
+	public GeoJsonObject createLineString(OsmWay osmWay) {
+		LineString lineString = new LineString();
+		lineString.setCoordinates(createPoints(osmWay));
+		return lineString;
+	}
+
+	private List<LngLatAlt> createPoints(OsmWay osmWay) {
+		List<LngLatAlt> points = new ArrayList<LngLatAlt>();
 		for (OsmNd nd : osmWay.getNd()) {
 			OsmNode node = nodes.get(nd.getRef());
-			geometry.addCoordinates(node.getLon(), node.getLat());
+			points.add(new LngLatAlt(node.getLon(), node.getLat()));
 		}
-		return geometry;
+		return points;
 	}
 
 	public Osm getOsm() {

@@ -3,18 +3,18 @@ package org.osmsurround.selective.data;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osmtools.geojson.Geometry;
+import org.geojson.GeoJsonObject;
 
 public class DownloadDataResponse {
 
-	private Geometry geometry;
+	private GeoJsonObject geometry;
 	private Map<String, Object> support = new HashMap<String, Object>();
 
-	public DownloadDataResponse(Geometry geometry) {
+	public DownloadDataResponse(GeoJsonObject geometry) {
 		this.geometry = geometry;
 	}
 
-	public Geometry getGeometry() {
+	public GeoJsonObject getGeometry() {
 		return geometry;
 	}
 
@@ -25,5 +25,4 @@ public class DownloadDataResponse {
 	public void setSupport(Map<String, Object> support) {
 		this.support = support;
 	}
-
 }

@@ -1,5 +1,6 @@
 package org.osmsurround.selective.template;
 
+import org.geojson.GeoJsonObject;
 import org.osm.schema.Osm;
 import org.osm.schema.OsmTag;
 import org.osm.schema.OsmWay;
@@ -7,7 +8,6 @@ import org.osmsurround.selective.data.DownloadDataResponse;
 import org.osmsurround.selective.data.SearchConfig;
 import org.osmsurround.selective.data.WayFeatures;
 import org.osmtools.api.BoundingBox;
-import org.osmtools.geojson.Geometry;
 
 public abstract class AbstractTrackDataConverter extends AbstractDataConverter {
 
@@ -32,13 +32,11 @@ public abstract class AbstractTrackDataConverter extends AbstractDataConverter {
 			if (tag.getK().equals("surface"))
 				wayFeatures.setSurface();
 		}
-
 		return decideWay(wayFeatures, context.getSearchConfig());
 	}
 
 	@Override
-	protected Geometry convertObjectToGeometry(OsmWay osmWay, ConverterContext context) {
+	protected GeoJsonObject convertObjectToGeometry(OsmWay osmWay, ConverterContext context) {
 		return context.createLineString(osmWay);
 	}
-
 }
