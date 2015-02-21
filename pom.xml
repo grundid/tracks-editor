@@ -195,7 +195,7 @@
 					<configuration>
 						<useReleaseProfile>false</useReleaseProfile>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
-						<arguments>-Pbuild-prd,osm-prd,osm-oauth-tracks-editor</arguments>
+						<arguments>-Pbuild-prd,osm-oauth-tracks-editor</arguments>
 					</configuration>
 				</plugin>
 			</plugins>
