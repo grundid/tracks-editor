@@ -15,7 +15,9 @@ public abstract class AbstractHighwayDataConverter extends AbstractDataConverter
 
 	@Override
 	public DownloadDataResponse convert(BoundingBox boundingBox, SearchConfig searchConfig) {
-		Osm osm = searchConfig.isUseOverpass() ? overpassTemplate.getBBox(boundingBox) : osmTemplate
+		String data = "(way(" + boundingBox.getSouth() + "," + boundingBox.getWest() + "," + boundingBox.getNorth()
+				+ "," + boundingBox.getEast() + ");node(w)->.x;);out meta;";
+		Osm osm = searchConfig.isUseOverpass() ? overpassTemplate.getRaw(data) : osmTemplate
 				.getBBox(boundingBox);
 		ConverterContext context = new ConverterContext(osm, "highway", searchConfig);
 		return createDataResponse(context);
@@ -27,7 +29,8 @@ public abstract class AbstractHighwayDataConverter extends AbstractDataConverter
 		for (OsmTag tag : osmWay.getTag()) {
 			if (tag.getK().equals("highway"))
 				wayFeatures.setHighway();
-			if (tag.getK().equals("sidewalk"))
+			// if (tag.getK().equals("sidewalk"))
+			if (tag.getK().startsWith("footway"))
 				wayFeatures.setSidewalk();
 		}
 		return decideWay(wayFeatures, context.getSearchConfig());

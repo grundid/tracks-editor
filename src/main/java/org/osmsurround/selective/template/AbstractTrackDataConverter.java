@@ -26,7 +26,7 @@ public abstract class AbstractTrackDataConverter extends AbstractDataConverter {
 		WayFeatures wayFeatures = new WayFeatures();
 		for (OsmTag tag : osmWay.getTag()) {
 			if (tag.getK().equals("highway") && tag.getV().equals("track"))
-				wayFeatures.setHighwayTrack();;
+				wayFeatures.setHighwayTrack();
 			if (tag.getK().equals("tracktype") && tag.getV().startsWith("grade"))
 				wayFeatures.setGrade();
 			if (tag.getK().equals("surface"))
