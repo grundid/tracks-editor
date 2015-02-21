@@ -56,9 +56,19 @@ var geojsonLayer = L.geoJson(null, {
 			if (feature.properties && feature.properties.style && layer.setStyle) {
 				layer.setStyle(feature.properties.style);
 			}
+                        
+                        var arrowLayer = L.polylineDecorator(layer,{patterns: [
+                        /*{offset: 100+'%', repeat: 0, symbol: L.Symbol.arrowHead(
+                                    {pixelSize: 7, polygon: false, pathOptions: {stroke: true}})},*/
+                         {offset:'50px', repeat: '50px', symbol: L.Symbol.arrowHead(
+                                    {pixelSize: 7, polygon: false, pathOptions: {stroke: true}})}
+                        ]});
 
+                        arrowLayer.addTo(map);
+
+                        
 			knownWays[feature.properties.objectId] = feature;
-
+                        
 			(function(layer, props) {
 				layer.on("mouseover", function(e) {
 					layer.setStyle({
@@ -91,6 +101,7 @@ var geojsonLayer = L.geoJson(null, {
 );
 
 geojsonLayer.addTo(map);
+
 
 var overlayLayers = {
 	"Objects" : geojsonLayer
