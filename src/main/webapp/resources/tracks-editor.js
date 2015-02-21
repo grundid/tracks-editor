@@ -47,51 +47,57 @@ var baseLayers = {
 
 map.addLayer(osmLayer);
 
-var geojsonLayer = new L.GeoJSON();
+
+var geojsonLayer = L.geoJson(null, {
+	style: function (feature) {
+		return {color: feature.properties.color};
+	},
+	onEachFeature: function (feature, layer) {
+			if (feature.properties && feature.properties.style && layer.setStyle) {
+				layer.setStyle(feature.properties.style);
+			}
+
+			knownWays[feature.properties.objectId] = feature;
+
+			(function(layer, props) {
+				layer.on("mouseover", function(e) {
+					layer.setStyle({
+						color : "#ffff00"
+					});
+				});
+
+				layer.on("mouseout", function(e) {
+					layer.setStyle(props.style);
+				});
+
+				if (options.mobile) {
+					layer.on("click", function(e) {
+						$('body').append(createEditorPopup(props));
+						addTypeAheadFields(props.objectId);
+					});
+				}
+
+			})(layer, feature.properties);
+
+			if (!options.mobile) {
+				if (feature.properties && feature.properties.objectId) {
+					layer.bindPopup(createEditorPopup(feature.properties), {
+						objectId : feature.properties.objectId
+					});
+				}
+			}
+		}
+	}
+);
+
+geojsonLayer.addTo(map);
 
 var overlayLayers = {
 	"Objects" : geojsonLayer
 };
 
-map.addLayer(geojsonLayer);
-
 map.addControl(new L.Control.Layers(baseLayers, overlayLayers));
 
-geojsonLayer.on("featureparse", function(e) {
-	if (e.properties && e.properties.style && e.layer.setStyle) {
-		e.layer.setStyle(e.properties.style);
-	}
-
-	knownWays[e.properties.objectId] = e;
-
-	(function(layer, props) {
-		e.layer.on("mouseover", function(e) {
-			layer.setStyle({
-				color : "#ffff00"
-			});
-		});
-
-		e.layer.on("mouseout", function(e) {
-			layer.setStyle(props.style);
-		});
-
-		if (options.mobile) {
-			e.layer.on("click", function(e) {
-				$('body').append(createEditorPopup(props));
-				addTypeAheadFields(props.objectId);
-			});
-		}
-
-	})(e.layer, e.properties);
-
-	if (!options.mobile) {
-		if (e.properties && e.properties.objectId) {
-			e.layer.bindPopup(createEditorPopup(e.properties), {
-				objectId : e.properties.objectId
-			});
-		}
-	}
-});
 
 function createField(field, fieldId, data) {
 	var elem = $();
@@ -341,7 +347,7 @@ function downloadData() {
 				success : function(data) {
 					if (data.geometry.features && data.geometry.features.length) {
 						support = data.support;
-						geojsonLayer.addGeoJSON(data.geometry);
+						geojsonLayer.addData(data.geometry);
 						showMessageBox(data.geometry.features.length + " " + MSG.objects_found);
 						localStorage.setItem("lastData", JSON.stringify(data));
 					} else
@@ -486,7 +492,7 @@ function initEditor(newOptions) {
 			var lastData = $.parseJSON(localStorage.getItem('lastData'));
 			if (lastData.geometry) {
 				support = lastData.support;
-				geojsonLayer.addGeoJSON(lastData.geometry);
+				geojsonLayer.addData(lastData.geometry);
 				if (myMsg != "")
 					myMsg += "<br>";
 				myMsg += lastData.geometry.features.length + " " + MSG.objects_found;
