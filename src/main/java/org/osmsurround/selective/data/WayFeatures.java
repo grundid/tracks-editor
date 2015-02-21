@@ -5,6 +5,25 @@ public class WayFeatures {
 	private boolean highwayTrack = false;
 	private boolean grade = false;
 	private boolean surface = false;
+	private boolean highway = false;
+
+	private boolean sidewalk = false;
+
+	public boolean isSidewalk() {
+		return sidewalk;
+	}
+
+	public void setSidewalk() {
+		this.sidewalk = true;
+	}
+	
+	public boolean isHighway() {
+		return highway;
+	}
+
+	public void setHighway() {
+		this.highway = true;
+	}
 
 	public boolean isHighwayTrack() {
 		return highwayTrack;

@@ -9,7 +9,7 @@ import org.osmsurround.selective.data.SearchConfig;
 import org.osmsurround.selective.data.WayFeatures;
 import org.osmtools.api.BoundingBox;
 
-public abstract class AbstractTrackDataConverter extends AbstractDataConverter {
+public abstract class AbstractHighwayDataConverter extends AbstractDataConverter {
 
 	protected abstract boolean decideWay(WayFeatures wayFeatures, SearchConfig searchConfig);
 
@@ -17,7 +17,7 @@ public abstract class AbstractTrackDataConverter extends AbstractDataConverter {
 	public DownloadDataResponse convert(BoundingBox boundingBox, SearchConfig searchConfig) {
 		Osm osm = searchConfig.isUseOverpass() ? overpassTemplate.getBBox(boundingBox) : osmTemplate
 				.getBBox(boundingBox);
-		ConverterContext context = new ConverterContext(osm, "track", searchConfig);
+		ConverterContext context = new ConverterContext(osm, "highway", searchConfig);
 		return createDataResponse(context);
 	}
 
@@ -25,12 +25,10 @@ public abstract class AbstractTrackDataConverter extends AbstractDataConverter {
 	protected boolean useObject(OsmWay osmWay, ConverterContext context) {
 		WayFeatures wayFeatures = new WayFeatures();
 		for (OsmTag tag : osmWay.getTag()) {
-			if (tag.getK().equals("highway") && tag.getV().equals("track"))
-				wayFeatures.setHighwayTrack();;
-			if (tag.getK().equals("tracktype") && tag.getV().startsWith("grade"))
-				wayFeatures.setGrade();
-			if (tag.getK().equals("surface"))
-				wayFeatures.setSurface();
+			if (tag.getK().equals("highway"))
+				wayFeatures.setHighway();
+			if (tag.getK().equals("sidewalk"))
+				wayFeatures.setSidewalk();
 		}
 		return decideWay(wayFeatures, context.getSearchConfig());
 	}
