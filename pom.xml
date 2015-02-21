@@ -9,6 +9,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework-version>3.2.4.RELEASE</org.springframework-version>
+		<org.osmtools-version>1.1.1</org.osmtools-version>
 		<org.slf4j-version>1.6.4</org.slf4j-version>
 		<java-version>1.7</java-version>
 		<config.build.type>DEV</config.build.type>
@@ -95,12 +96,12 @@
 		<dependency>
 			<groupId>de.grundid.osmtools</groupId>
 			<artifactId>osm-tools-formats</artifactId>
-			<version>1.0.M7</version>
+			<version>${org.osmtools-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.grundid.osmtools</groupId>
 			<artifactId>osm-tools-api</artifactId>
-			<version>1.0.M7</version>
+			<version>${org.osmtools-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -147,6 +148,11 @@
 			<groupId>oauth.signpost</groupId>
 			<artifactId>signpost-commonshttp4</artifactId>
 			<version>1.2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+			<version>3.2.5.RELEASE</version>
 		</dependency>
 		
 	</dependencies>
