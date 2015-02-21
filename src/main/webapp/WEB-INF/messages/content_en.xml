@@ -12,6 +12,7 @@
 	<entry key="options.overpass">Use Overpass API</entry>
 	<entry key="options.notracktype">Show tracks without tracktype</entry>
 	<entry key="options.nosurface">Show tracks without surface</entry>
+	<entry key="options.nosidewalk">Show streets without sidewalk or footway Tag</entry>
 	<entry key="options.noaddress">Show buildings without address</entry>
 	<entry key="options.nonameresidential">Show residential without name</entry>
 	<entry key="about.title">About OSM QA Editor</entry>

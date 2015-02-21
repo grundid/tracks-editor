@@ -14,7 +14,7 @@ public class NoSidewalkDataConverter extends AbstractHighwayDataConverter {
 
 	@Override
 	protected boolean decideWay(WayFeatures wayFeatures, SearchConfig searchConfig) {
-		if (wayFeatures.isHighway() && !wayFeatures.isSidewalk()) {
+		if (wayFeatures.isStreet() && !wayFeatures.isSidewalk()) {
 			return true;
 		}
 		return false;

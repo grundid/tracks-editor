@@ -11,7 +11,7 @@
 	<entry key="menu.options">Optionen</entry>
 	<entry key="options.overpass">Verwende Overpass API</entry>
 	<entry key="options.notracktype">Zeige tracks ohne tracktype</entry>
-	<entry key="options.nosidewalk">Zeige highways ohne sidewalk</entry>
+	<entry key="options.nosidewalk">Zeige Straßen ohne sidewalk oder footway Tag</entry>
 	<entry key="options.nosurface">Zeige tracks ohne surface</entry>
 	<entry key="options.noaddress">Zeige Gebäude ohne Adresse</entry>
 	<entry key="options.nonameresidential">Zeige Straßen in Wohngebieten ohne Namen</entry>

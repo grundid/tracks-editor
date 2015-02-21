@@ -5,7 +5,7 @@ public class WayFeatures {
 	private boolean highwayTrack = false;
 	private boolean grade = false;
 	private boolean surface = false;
-	private boolean highway = false;
+	private boolean street = false;
 
 	private boolean sidewalk = false;
 
@@ -17,12 +17,17 @@ public class WayFeatures {
 		this.sidewalk = true;
 	}
 	
-	public boolean isHighway() {
-		return highway;
+	/**
+	 * Tests, for highway=primary|secondary|tertiary|unclassified|residential|service|living_street
+	 * 
+	 * @return
+	 */
+	public boolean isStreet() {
+		return street;
 	}
 
-	public void setHighway() {
-		this.highway = true;
+	public void setStreet() {
+		this.street = true;
 	}
 
 	public boolean isHighwayTrack() {
