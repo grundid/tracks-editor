@@ -57,7 +57,10 @@ var geojsonLayer = L.geoJson(null, {
 				layer.setStyle(feature.properties.style);
 			}
 
-			knownWays[feature.properties.objectId] = feature;
+			knownWays[feature.properties.objectId] = {
+				feature: feature,
+				layer: layer
+			};
 
 			(function(layer, props) {
 				layer.on("mouseover", function(e) {
@@ -149,7 +152,7 @@ function createFieldElement(x, currentField, props) {
 	return field;
 }
 
-function createEditorPopup(props) {
+function createEditorPopup(props, layer) {
 	var elem = (options.mobile) ? $('<div id="fullScreenEditor" style="position:absolute;left:0;top:0;width:100%;height:100%;background-color:white;z-index:100" />')
 			: $('<div style="margin:10px;width:300px;" />');
 
@@ -193,9 +196,9 @@ function createEditorPopup(props) {
 	bottomBar
 			.append('<button type="button" class="btn btn-small btn-primary" onclick="saveWay(this.form);">'
 					+ MSG.button_save + '</button>&nbsp;');
-	bottomBar
-			.append('<button type="button" class="btn btn-small" onclick="cancelPopup(this.form);">'
-					+ MSG.button_cancel + '</button>&nbsp;');
+	var cancelButton = $('<button type="button" class="btn btn-small" onclick="cancelPopup(this)">'	+ MSG.button_cancel + '</button>');
+	bottomBar.append(cancelButton);
+	bottomBar.append('&nbsp;');
 	bottomBar
 			.append('<button type="button" class="btn btn-small" onclick="addTag(this.form);" title="'
 					+ MSG.button_add_tag_title + '">' + MSG.button_add_tag + '</button>&nbsp;');
@@ -210,13 +213,14 @@ function createEditorPopup(props) {
 	return $('<div class="modal-body" />').html(elem).html();
 }
 
-function cancelPopup(form) {
-	var objectId = $(form).find("[name=objectId]").val();
+function cancelPopup(element) {
+	var objectId = $(element.form).find("[name=objectId]").val();
 	var knownWay = knownWays[objectId];
 	if (options.mobile)
 		$('#fullScreenEditor').remove();
-	else
+	else {
 		map.closePopup(knownWay.layer._popup);
+	}
 }
 
 function addTag(form) {
@@ -250,10 +254,11 @@ function saveWay(form) {
 		pendingWays[objectId] = osmObject;
 
 		var knownWay = knownWays[objectId];
-		$.extend(knownWay.properties.tags, tags);
-		knownWay.properties.style.color = "#0000ff";
+		var feature = knownWay.feature;
+		$.extend(feature.properties.tags, tags);
+		feature.properties.style.color = "#0000ff";
 
-		knownWay.layer.setStyle(knownWay.properties.style);
+		knownWay.layer.setStyle(feature.properties.style);
 
 		if (options.mobile)
 			$('#fullScreenEditor').remove();
