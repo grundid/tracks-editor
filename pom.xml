@@ -21,9 +21,9 @@
 		<config.mail.username />
 		<config.mail.password />
 		<osm.api.base.url>http://api.openstreetmap.org</osm.api.base.url>
-		<oauth.requestTokenEndpointUrl>http://www.openstreetmap.org/oauth/request_token</oauth.requestTokenEndpointUrl>
-		<oauth.accessTokenEndpointUrl>http://www.openstreetmap.org/oauth/access_token</oauth.accessTokenEndpointUrl>
-		<oauth.authorizeWebsiteUrl>http://www.openstreetmap.org/oauth/authorize</oauth.authorizeWebsiteUrl>
+		<oauth.requestTokenEndpointUrl>https://www.openstreetmap.org/oauth/request_token</oauth.requestTokenEndpointUrl>
+		<oauth.accessTokenEndpointUrl>https://www.openstreetmap.org/oauth/access_token</oauth.accessTokenEndpointUrl>
+		<oauth.authorizeWebsiteUrl>https://www.openstreetmap.org/oauth/authorize</oauth.authorizeWebsiteUrl>
 
 		<oauth.callbackUrl>http://localhost:8080/tracks-editor/oauthResponse</oauth.callbackUrl>
 		<oauth.consumerKey>not set</oauth.consumerKey>
@@ -189,7 +189,7 @@
 					<configuration>
 						<useReleaseProfile>false</useReleaseProfile>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
-						<arguments>-Pbuild-prd,osm-prd</arguments>
+						<arguments>-Pbuild-prd,osm-prd,osm-oauth-tracks-editor</arguments>
 					</configuration>
 				</plugin>
 			</plugins>
