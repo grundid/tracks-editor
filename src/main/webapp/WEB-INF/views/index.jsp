@@ -82,6 +82,7 @@ label {
 <!-- Leaflet JavaScript -->
 <script src="rs/leaflet/leaflet-src.js"></script>
 <script src="rs/jquery-1.7.2.min.js"></script>
+<script src="rs/leaflet/leaflet.polylineDecorator.min.js"></script>
 <script src="rs/bootstrap/js/bootstrap.js"></script>
 <script src="rs/messages-${currentLocaleLanguage}.js"></script>
 <script src="rs/templates.js"></script>
