@@ -58,16 +58,15 @@ var geojsonLayer = L.geoJson(null, {
 			}
                         
 			var arrowLayer = L.polylineDecorator(layer,{patterns: [
-			/*{offset: 100+'%', repeat: 0, symbol: L.Symbol.arrowHead(
-						{pixelSize: 7, polygon: false, pathOptions: {stroke: true}})},*/
-			 {offset:'50px', repeat: '50px', symbol: L.Symbol.arrowHead(
+			 {offset:'0px', repeat: '50px', symbol: L.Symbol.arrowHead(
 						{pixelSize: 7, polygon: false, pathOptions: {stroke: true}})}
 			]});
 			arrowLayer.addTo(map);
 
 			knownWays[feature.properties.objectId] = {
 				feature: feature,
-				layer: layer
+				layer: layer,
+				arrowLayer : arrowLayer
 			};
 
 			(function(layer, props) {
@@ -292,6 +291,7 @@ function updatePendingWays() {
 function clearPendingWays() {
 	for ( var objectId in pendingWays) {
 		geojsonLayer.removeLayer(knownWays[objectId].layer);
+		map.removeLayer(knownWays[objectId].arrowLayer);
 	}
 	pendingWays = {};
 	updatePendingWays();
@@ -340,6 +340,12 @@ function downloadData() {
 		if ($.isEmptyObject(pendingWays) || confirm(MSG.warn_unsaved_changes)) {
 
 			clearPendingWays();
+			Object.keys(knownWays).forEach(function(key) {
+				var knownWay = knownWays[key];
+				if (knownWay.arrowLayer) {
+					map.removeLayer(knownWay.arrowLayer);
+				}
+			});
 			knownWays = {};
 			geojsonLayer.clearLayers();
 			var bounds = map.getBounds();
