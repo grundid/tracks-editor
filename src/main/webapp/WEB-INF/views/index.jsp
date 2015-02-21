@@ -123,6 +123,8 @@ label {
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
 													value="noTracktype" checked="checked">&nbsp;<spring:message code="options.notracktype" /></label></a></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
+													value="noSidewalk" checked="checked">&nbsp;<spring:message code="options.nosidewalk" /></label></a></li>
+										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
 													value="noSurface">&nbsp;<spring:message code="options.nosurface" /></label></a></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
 													value="noAddress">&nbsp;<spring:message code="options.noaddress" /></label></a></li>
