@@ -4,3 +4,5 @@
 **/target
 **/bin
 target
+nb-configuration.xml
+**/webapp/META-INF

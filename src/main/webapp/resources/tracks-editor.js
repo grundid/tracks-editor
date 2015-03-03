@@ -47,51 +47,67 @@ var baseLayers = {
 
 map.addLayer(osmLayer);
 
-var geojsonLayer = new L.GeoJSON();
+
+var geojsonLayer = L.geoJson(null, {
+	style: function (feature) {
+		return {color: feature.properties.color};
+	},
+	onEachFeature: function (feature, layer) {
+			if (feature.properties && feature.properties.style && layer.setStyle) {
+				layer.setStyle(feature.properties.style);
+			}
+                        
+			var arrowLayer = L.polylineDecorator(layer,{patterns: [
+			 {offset:'0px', repeat: '50px', symbol: L.Symbol.arrowHead(
+						{pixelSize: 7, polygon: false, pathOptions: {stroke: true}})}
+			]});
+			arrowLayer.addTo(map);
+
+			knownWays[feature.properties.objectId] = {
+				feature: feature,
+				layer: layer,
+				arrowLayer : arrowLayer
+			};
+
+			(function(layer, props) {
+				layer.on("mouseover", function(e) {
+					layer.setStyle({
+						color : "#ffff00"
+					});
+				});
+
+				layer.on("mouseout", function(e) {
+					layer.setStyle(props.style);
+				});
+
+				if (options.mobile) {
+					layer.on("click", function(e) {
+						$('body').append(createEditorPopup(props));
+						addTypeAheadFields(props.objectId);
+					});
+				}
+
+			})(layer, feature.properties);
+
+			if (!options.mobile) {
+				if (feature.properties && feature.properties.objectId) {
+					layer.bindPopup(createEditorPopup(feature.properties), {
+						objectId : feature.properties.objectId
+					});
+				}
+			}
+		}
+	}
+);
+
+geojsonLayer.addTo(map);
 
 var overlayLayers = {
 	"Objects" : geojsonLayer
 };
 
-map.addLayer(geojsonLayer);
-
 map.addControl(new L.Control.Layers(baseLayers, overlayLayers));
 
-geojsonLayer.on("featureparse", function(e) {
-	if (e.properties && e.properties.style && e.layer.setStyle) {
-		e.layer.setStyle(e.properties.style);
-	}
-
-	knownWays[e.properties.objectId] = e;
-
-	(function(layer, props) {
-		e.layer.on("mouseover", function(e) {
-			layer.setStyle({
-				color : "#ffff00"
-			});
-		});
-
-		e.layer.on("mouseout", function(e) {
-			layer.setStyle(props.style);
-		});
-
-		if (options.mobile) {
-			e.layer.on("click", function(e) {
-				$('body').append(createEditorPopup(props));
-				addTypeAheadFields(props.objectId);
-			});
-		}
-
-	})(e.layer, e.properties);
-
-	if (!options.mobile) {
-		if (e.properties && e.properties.objectId) {
-			e.layer.bindPopup(createEditorPopup(e.properties), {
-				objectId : e.properties.objectId
-			});
-		}
-	}
-});
 
 function createField(field, fieldId, data) {
 	var elem = $();
@@ -143,7 +159,7 @@ function createFieldElement(x, currentField, props) {
 	return field;
 }
 
-function createEditorPopup(props) {
+function createEditorPopup(props, layer) {
 	var elem = (options.mobile) ? $('<div id="fullScreenEditor" style="position:absolute;left:0;top:0;width:100%;height:100%;background-color:white;z-index:100" />')
 			: $('<div style="margin:10px;width:300px;" />');
 
@@ -187,9 +203,9 @@ function createEditorPopup(props) {
 	bottomBar
 			.append('<button type="button" class="btn btn-small btn-primary" onclick="saveWay(this.form);">'
 					+ MSG.button_save + '</button>&nbsp;');
-	bottomBar
-			.append('<button type="button" class="btn btn-small" onclick="cancelPopup(this.form);">'
-					+ MSG.button_cancel + '</button>&nbsp;');
+	var cancelButton = $('<button type="button" class="btn btn-small" onclick="cancelPopup(this)">'	+ MSG.button_cancel + '</button>');
+	bottomBar.append(cancelButton);
+	bottomBar.append('&nbsp;');
 	bottomBar
 			.append('<button type="button" class="btn btn-small" onclick="addTag(this.form);" title="'
 					+ MSG.button_add_tag_title + '">' + MSG.button_add_tag + '</button>&nbsp;');
@@ -204,13 +220,14 @@ function createEditorPopup(props) {
 	return $('<div class="modal-body" />').html(elem).html();
 }
 
-function cancelPopup(form) {
-	var objectId = $(form).find("[name=objectId]").val();
+function cancelPopup(element) {
+	var objectId = $(element.form).find("[name=objectId]").val();
 	var knownWay = knownWays[objectId];
 	if (options.mobile)
 		$('#fullScreenEditor').remove();
-	else
+	else {
 		map.closePopup(knownWay.layer._popup);
+	}
 }
 
 function addTag(form) {
@@ -244,10 +261,11 @@ function saveWay(form) {
 		pendingWays[objectId] = osmObject;
 
 		var knownWay = knownWays[objectId];
-		$.extend(knownWay.properties.tags, tags);
-		knownWay.properties.style.color = "#0000ff";
+		var feature = knownWay.feature;
+		$.extend(feature.properties.tags, tags);
+		feature.properties.style.color = "#0000ff";
 
-		knownWay.layer.setStyle(knownWay.properties.style);
+		knownWay.layer.setStyle(feature.properties.style);
 
 		if (options.mobile)
 			$('#fullScreenEditor').remove();
@@ -273,6 +291,7 @@ function updatePendingWays() {
 function clearPendingWays() {
 	for ( var objectId in pendingWays) {
 		geojsonLayer.removeLayer(knownWays[objectId].layer);
+		map.removeLayer(knownWays[objectId].arrowLayer);
 	}
 	pendingWays = {};
 	updatePendingWays();
@@ -321,6 +340,12 @@ function downloadData() {
 		if ($.isEmptyObject(pendingWays) || confirm(MSG.warn_unsaved_changes)) {
 
 			clearPendingWays();
+			Object.keys(knownWays).forEach(function(key) {
+				var knownWay = knownWays[key];
+				if (knownWay.arrowLayer) {
+					map.removeLayer(knownWay.arrowLayer);
+				}
+			});
 			knownWays = {};
 			geojsonLayer.clearLayers();
 			var bounds = map.getBounds();
@@ -341,7 +366,7 @@ function downloadData() {
 				success : function(data) {
 					if (data.geometry.features && data.geometry.features.length) {
 						support = data.support;
-						geojsonLayer.addGeoJSON(data.geometry);
+						geojsonLayer.addData(data.geometry);
 						showMessageBox(data.geometry.features.length + " " + MSG.objects_found);
 						localStorage.setItem("lastData", JSON.stringify(data));
 					} else
@@ -486,7 +511,7 @@ function initEditor(newOptions) {
 			var lastData = $.parseJSON(localStorage.getItem('lastData'));
 			if (lastData.geometry) {
 				support = lastData.support;
-				geojsonLayer.addGeoJSON(lastData.geometry);
+				geojsonLayer.addData(lastData.geometry);
 				if (myMsg != "")
 					myMsg += "<br>";
 				myMsg += lastData.geometry.features.length + " " + MSG.objects_found;
