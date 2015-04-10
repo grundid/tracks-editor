@@ -10,18 +10,26 @@
 	<entry key="menu.about">About</entry>
 	<entry key="menu.options">Options</entry>
 	<entry key="options.overpass">Use Overpass API</entry>
-	<entry key="options.notracktype">Show tracks without tracktype</entry>
-	<entry key="options.nosurface">Show tracks without surface</entry>
-	<entry key="options.nosidewalk">Show streets without sidewalk or footway Tag</entry>
-	<entry key="options.noaddress">Show buildings without address</entry>
+	
+	<entry key="options.notracktype">Show tracks without tracktype tag</entry>
+	<entry key="options.nosurface">Show tracks without surface tag</entry>
+	
+	<entry key="options.nosmoothness">Show ways without smoothness tag</entry>
+	<entry key="options.nosurfacehighway">Show ways without surface tag</entry>
+	<entry key="options.noincline">Show ways without incline tag</entry>
+	<entry key="options.nosidewalk">Show ways without any sidewalk tag</entry>
+	
 	<entry key="options.nonameresidential">Show residential without name</entry>
+	
+	<entry key="options.noaddress">Show buildings without address</entry>
+	
+	
 	<entry key="about.title">About OSM QA Editor</entry>
 	<entry key="about.close.button">Close</entry>
 	<entry key="about.content"><![CDATA[
 				<p>
-				This tool will download and show you different problematic objects, like tracks <b>without a <a
-					href="http://wiki.openstreetmap.org/wiki/Key:tracktype" target="_blank">tracktype tag</a></b> or buildings without an
-				address in the current view . After data download click on a colored object to see the details and modify them.
+				This tool will download and show you different problematic objects, like tracks <b>without a <a href="http://wiki.openstreetmap.org/wiki/Key:tracktype" target="_blank">tracktype tag</a></b> or buildings without an
+				address in the current view. E.g. route computation for pedestrians and mobility impaired persons, data about sidewalks and their conditions are relevant. After data download click on a colored object to see the details and modify them.
 			</p>
 			<p>To edit objects in this editor please press the login button and authorize the QA Editor to be able to edit
 				ways unter your OSM username.</p>
@@ -40,7 +48,7 @@
 			</p>
 			<p>
 				Created by <a href="http://www.openstreetmap.org/user/nitegate">nitegate</a> (<a href="http://www.grundid.de">GrundID
-					GmbH</a>), Data by <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
+					GmbH</a>) with contributions of the <a href="http://www.geog.uni-heidelberg.de/gis/http://www.geog.uni-heidelberg.de/gis/index_en.html"> GIScience research group of Heidelberg University</a>, Data by <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
 			</p>
 			<p>Powered by Leaflet, Bootstrap, jQuery, osm-tools. Source code at: <a href="https://github.com/grundid/tracks-editor">GitHub</a>.</p>
 	]]></entry>

@@ -120,17 +120,36 @@ label {
 									<ul class="dropdown-menu">
 										<li><a href="#"><label><input style="display: inline" type="checkbox" checked="checked"
 													value="true" name="overpass">&nbsp;<spring:message code="options.overpass" /></label></a></li>
+													
 										<li class="divider"></li>
+										
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
 													value="noTracktype" checked="checked">&nbsp;<spring:message code="options.notracktype" /></label></a></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
+													value="noSurface">&nbsp;<spring:message code="options.nosurface" /></label></a></li>
+													
+										<li class="divider"></li>
+										
+										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
 													value="noSidewalk" checked="checked">&nbsp;<spring:message code="options.nosidewalk" /></label></a></li>
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
-													value="noSurface">&nbsp;<spring:message code="options.nosurface" /></label></a></li>
+													value="noIncline" checked="checked">&nbsp;<spring:message code="options.noincline" /></label></a></li>
+										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
+													value="noSurfaceHighway" checked="checked">&nbsp;<spring:message code="options.nosurfacehighway" /></label></a></li>
+										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
+													value="noSmoothness" checked="checked">&nbsp;<spring:message code="options.nosmoothness" /></label></a></li>
+													
+										<li class="divider"></li>
+										
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
 													value="noAddress">&nbsp;<spring:message code="options.noaddress" /></label></a></li>
+													
+										<li class="divider"></li>
+										
 										<li><a href="#"><label><input style="display: inline" type="radio" name="template"
 													value="noNameResidential">&nbsp;<spring:message code="options.nonameresidential" /></label></a></li>
+										
+										<li class="divider"></li>
 									</ul></li>
 							</ul>
 						</form>
