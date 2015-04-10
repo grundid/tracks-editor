@@ -17,7 +17,7 @@
 	<entry key="options.nosmoothness">Zeige Wege ohne Smoothness Tag</entry>
 	<entry key="options.nosurfacehighway">Zeige Wege ohne Surface Tag</entry>
 	<entry key="options.noincline">Zeige Wege ohne Incline Tag</entry>
-	<entry key="options.nosidewalk">Zeige Wege ohne Sidewalk Tag</entry>
+	<entry key="options.nosidewalk">Zeige Straßen ohne Sidewalk Tag</entry>
 	
 	<entry key="options.nonameresidential">Zeige Straßen in Wohngebieten ohne Namen</entry>
 	
