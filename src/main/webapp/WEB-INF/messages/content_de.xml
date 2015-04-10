@@ -49,7 +49,7 @@
 			</p>
 			<p>
 				Erstellt von <a href="http://www.openstreetmap.org/user/nitegate">nitegate</a> (<a href="http://www.grundid.de">GrundID
-					GmbH</a>) mit Beiträgen des (<a href="http://www.geog.uni-heidelberg.de/gis/">Lehrstuhl Geoinformatik der Universität Heidelberg</a>, Data by <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
+					GmbH</a>) mit Beiträgen des <a href="http://www.geog.uni-heidelberg.de/gis/">Lehrstuhl Geoinformatik der Universität Heidelberg</a>, Data by <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
 			</p>
 			<p>Powered by Leaflet, Bootstrap, jQuery, osm-tools. Source code: <a href="https://github.com/grundid/tracks-editor">GitHub</a>.</p>
 	]]></entry>
