@@ -15,12 +15,10 @@ public abstract class AbstractHighwayDataConverter extends AbstractDataConverter
 
 	@Override
 	public DownloadDataResponse convert(BoundingBox boundingBox, SearchConfig searchConfig) {
-		String data = "(way(" + boundingBox.getSouth() + "," + boundingBox.getWest() + "," + boundingBox.getNorth()
-				+ "," + boundingBox.getEast() + ");node(w)->.x;);out meta;";
-		// String data = "(way[highway=*](" + boundingBox.getSouth() + "," + boundingBox.getWest() + ","
-		//		+ boundingBox.getNorth() + "," + boundingBox.getEast() + ");node(w)->.x;);out meta;";
-		Osm osm = searchConfig.isUseOverpass() ? overpassTemplate.getRaw(data) : osmTemplate
-				.getBBox(boundingBox);
+		
+		
+		String data = "(way(" + boundingBox.getSouth() + "," + boundingBox.getWest() + "," + boundingBox.getNorth() + "," + boundingBox.getEast() + ");node(w)->.x;);out meta;";
+		Osm osm = searchConfig.isUseOverpass() ? overpassTemplate.getRaw(data) : osmTemplate.getBBox(boundingBox);
 		ConverterContext context = new ConverterContext(osm, "highway", searchConfig);
 		return createDataResponse(context);
 	}
@@ -32,17 +30,28 @@ public abstract class AbstractHighwayDataConverter extends AbstractDataConverter
 			if (tag.getK().equals("highway")) {
 				if (
 						tag.getV().equals("primary") ||
+						tag.getV().equals("primary_link") ||
 						tag.getV().equals("secondary") ||
+						tag.getV().equals("secondary_link") ||
 						tag.getV().equals("tertiary") ||
-						tag.getV().equals("unclassified") ||
-						tag.getV().equals("residential") ||
+						tag.getV().equals("tertiary_link") ||
 						tag.getV().equals("service") ||
+						tag.getV().equals("residential") ||
+						tag.getV().equals("unclassified") ||						
 						tag.getV().equals("living_street")
-					)
-				wayFeatures.setStreet();
+					) {
+					wayFeatures.setHighwayStreet();
+				}
+				wayFeatures.setHighway();
 			}
 			if (tag.getK().startsWith("footway") || tag.getK().startsWith("sidewalk"))
 				wayFeatures.setSidewalk();
+			if (tag.getK().contains("incline"))
+				wayFeatures.setIncline();
+			if (tag.getK().contains("smoothness"))
+				wayFeatures.setSmoothness();
+			if (tag.getK().contains("surface"))
+				wayFeatures.setSurface();
 		}
 		return decideWay(wayFeatures, context.getSearchConfig());
 	}

@@ -5,16 +5,16 @@ import org.osmsurround.selective.data.WayFeatures;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NoSidewalkDataConverter extends AbstractHighwayDataConverter {
+public class NoSmoothnessDataConverter extends AbstractHighwayDataConverter {
 
 	@Override
 	public boolean canHandle(SearchConfig searchConfig) {
-		return "noSidewalk".equals(searchConfig.getTemplate());
+		return "noSmoothness".equals(searchConfig.getTemplate());
 	}
 
 	@Override
 	protected boolean decideWay(WayFeatures wayFeatures, SearchConfig searchConfig) {
-		if (wayFeatures.isHighwayStreet() && !wayFeatures.hasSidewalk()) {
+		if (wayFeatures.isHighway() && !wayFeatures.hasSmoothness()) {
 			return true;
 		}
 		return false;

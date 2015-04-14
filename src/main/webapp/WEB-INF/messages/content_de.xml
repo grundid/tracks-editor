@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-	<entry key="app.name">OSM QA Editor</entry>
+	<entry key="app.name">OSM Quality Assurance Editor</entry>
 	<entry key="menu.download.data">Daten downloaden</entry>
 	<entry key="menu.upload.changes">Änderungen hochladen</entry>
 	<entry key="menu.locate.me">Lokalisiere mich</entry>
@@ -10,21 +10,31 @@
 	<entry key="menu.about">Über</entry>
 	<entry key="menu.options">Optionen</entry>
 	<entry key="options.overpass">Verwende Overpass API</entry>
-	<entry key="options.notracktype">Zeige tracks ohne tracktype</entry>
-	<entry key="options.nosidewalk">Zeige Straßen ohne sidewalk oder footway Tag</entry>
-	<entry key="options.nosurface">Zeige tracks ohne surface</entry>
-	<entry key="options.noaddress">Zeige Gebäude ohne Adresse</entry>
+	
+	<entry key="options.notracktype">Zeige Tracks ohne Tracktype Tag</entry>
+	<entry key="options.nosurface">Zeige Tracks ohne Surface Tag</entry>
+	
+	<entry key="options.nosmoothness">Zeige Wege ohne Smoothness Tag</entry>
+	<entry key="options.nosurfacehighway">Zeige Wege ohne Surface Tag</entry>
+	<entry key="options.noincline">Zeige Wege ohne Incline Tag</entry>
+	<entry key="options.nosidewalk">Zeige Straßen ohne Sidewalk Tag</entry>
+	
 	<entry key="options.nonameresidential">Zeige Straßen in Wohngebieten ohne Namen</entry>
-	<entry key="about.title">Über OSM QA Editor</entry>
+	
+	<entry key="options.noaddress">Zeige Gebäude ohne Adresse</entry>
+	
+	<entry key="about.title">Über OSM Quality Assurance Editor</entry>
 	<entry key="about.close.button">Schließen</entry>
 	<entry key="about.content"><![CDATA[
 				<p>
 				Dieses Tool kann bestimmte problematische Objekte vom OSM Server downloaden und zum Editieren anzeigen.
 				Dies können beispielsweise tracks <b>ohne <a href="http://wiki.openstreetmap.org/wiki/Key:tracktype" target="_blank">tracktype tag</a></b> 
-				sein oder Gebäude ohne eine Adresse. Der Download Bereich bezieht sich immer auf den sichtbaren Fensterbereich.
+				sein oder Gebäude ohne eine Adresse. Für die Routenberechnung für Fußgänger und insbesondere für Menschen mit Mobilitätseinschränkungen sind 
+				beispielsweise Informationen zum Vorhandensein von Gehwegen und deren Beschaffenheit von Bedeutung. 
+				Der Download Bereich bezieht sich immer auf den sichtbaren Fensterbereich.
 				Nach dem Download klicke einfach auf das farbliche Objekt und modifiziere es entsprechend.
 			</p>
-			<p>Bitte logge dich vor dem Berarbeiten beim OSM Server ein unter der Verwendung des Login Buttons um den QA Editor 
+			<p>Bitte logge Dich vor dem Berarbeiten beim OSM Server ein unter der Verwendung des Login Buttons um den QA Editor 
 			für Änderungen in deinem Namen zu authorizieren.</p>
 			<p>
 				<strong>Hinweis:</strong> Die Zugangs-Token (nicht das Passwort) werden auf deinem Computer gespeichert. Verwende deshalb diese Funktion nicht auf 
@@ -39,7 +49,7 @@
 			</p>
 			<p>
 				Erstellt von <a href="http://www.openstreetmap.org/user/nitegate">nitegate</a> (<a href="http://www.grundid.de">GrundID
-					GmbH</a>), Data by <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
+					GmbH</a>) mit Beiträgen des <a href="http://www.geog.uni-heidelberg.de/gis/">Lehrstuhl Geoinformatik der Universität Heidelberg</a>, Data by <a href="http://www.openstreetmap.org">OpenStreetMap contributors</a>.
 			</p>
 			<p>Powered by Leaflet, Bootstrap, jQuery, osm-tools. Source code: <a href="https://github.com/grundid/tracks-editor">GitHub</a>.</p>
 	]]></entry>
