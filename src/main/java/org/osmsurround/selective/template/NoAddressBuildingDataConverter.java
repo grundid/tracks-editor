@@ -1,12 +1,12 @@
 package org.osmsurround.selective.template;
 
-import java.util.Set;
-import java.util.TreeSet;
-
 import org.osm.schema.OsmTag;
 import org.osm.schema.OsmWay;
 import org.osmsurround.selective.data.SearchConfig;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class NoAddressBuildingDataConverter extends BuildingDataConverter {
@@ -32,7 +32,7 @@ public class NoAddressBuildingDataConverter extends BuildingDataConverter {
 			if (tag.getK().equals("highway")) {
 				isHighway = true;
 			}
-			if (tag.getK().equals("building"))
+			if (tag.getK().equals("building") && !isGarage(tag.getV()))
 				return !hasValidAddress(osmWay.getTag());
 		}
 		if (isHighway && streetName != null) {
@@ -40,6 +40,10 @@ public class NoAddressBuildingDataConverter extends BuildingDataConverter {
 			streetNames.add(streetName);
 		}
 		return false;
+	}
+
+	private boolean isGarage(String value) {
+		return "garage".equals(value) | "garages".equals(value);
 	}
 
 	private boolean hasValidAddress(Iterable<OsmTag> tags) {

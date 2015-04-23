@@ -8,6 +8,10 @@ var templates = {
 				value : ""
 			}, {
 				value : "yes"
+			}, {
+				value : "garage"
+			}, {
+				value : "garages"
 			} ]
 		},
 
