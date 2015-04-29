@@ -17,7 +17,14 @@ public abstract class AbstractHighwayDataConverter extends AbstractDataConverter
 	public DownloadDataResponse convert(BoundingBox boundingBox, SearchConfig searchConfig) {
 		
 		
-		String data = "(way(" + boundingBox.getSouth() + "," + boundingBox.getWest() + "," + boundingBox.getNorth() + "," + boundingBox.getEast() + ");node(w)->.x;);out meta;";
+		// String data = "(way(" + boundingBox.getSouth() + "," + boundingBox.getWest() + "," + boundingBox.getNorth() + "," + boundingBox.getEast() + ");node(w)->.x;);out meta;";
+		
+		String data = "(way[\"highway\"~\"primary_link|secondary|secondary_link|tertiary|tertiary_link|service|residential|unclassified|living_street|pedestrian|cycleway|footway|path|track\"](" 
+		// String data = "(way[\"highway\"~\"primary_link|secondary|secondary_link|tertiary|tertiary_link|service|residential|unclassified|living_street\"]("
+		+ boundingBox.getSouth() + "," + boundingBox.getWest() + "," + boundingBox.getNorth() + "," + boundingBox.getEast() + ");node(w)->.x;);out meta;";
+		
+		// http://overpass-api.de/api/interpreter?data=(way["highway"~"primary"](49.38,8.57,49.41,8.64);node(w)->.x;);out meta;
+		System.out.println("AbstractHighwayDataConverter.convert(), data="+data);
 		Osm osm = searchConfig.isUseOverpass() ? overpassTemplate.getRaw(data) : osmTemplate.getBBox(boundingBox);
 		ConverterContext context = new ConverterContext(osm, "highway", searchConfig);
 		return createDataResponse(context);

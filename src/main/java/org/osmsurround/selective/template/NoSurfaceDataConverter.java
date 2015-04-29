@@ -14,7 +14,7 @@ public class NoSurfaceDataConverter extends AbstractTrackDataConverter {
 
 	@Override
 	protected boolean decideWay(WayFeatures wayFeatures, SearchConfig searchConfig) {
-		if (wayFeatures.isHighway() && !wayFeatures.isSurface()) {
+		if (wayFeatures.isHighwayTrack() && !wayFeatures.isSurface()) {
 			return true;
 		}
 		return false;

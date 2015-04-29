@@ -5,7 +5,7 @@ import org.osmsurround.selective.data.WayFeatures;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NoSurfaceHighwayDataConverter extends AbstractTrackDataConverter {
+public class NoSurfaceHighwayDataConverter extends AbstractHighwayDataConverter {
 
 
 		@Override
@@ -15,7 +15,7 @@ public class NoSurfaceHighwayDataConverter extends AbstractTrackDataConverter {
 
 		@Override
 		protected boolean decideWay(WayFeatures wayFeatures, SearchConfig searchConfig) {
-			if (wayFeatures.isHighway() && !wayFeatures.hasSmoothness()) {
+			if (wayFeatures.isHighway() && !wayFeatures.isSurface()) {
 				return true;
 			}
 			return false;
