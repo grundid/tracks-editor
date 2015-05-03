@@ -18,6 +18,7 @@ public abstract class AbstractHighwayDataConverter extends AbstractDataConverter
 		
 		
 		String data = "(way(" + boundingBox.getSouth() + "," + boundingBox.getWest() + "," + boundingBox.getNorth() + "," + boundingBox.getEast() + ");node(w)->.x;);out meta;";
+		
 		Osm osm = searchConfig.isUseOverpass() ? overpassTemplate.getRaw(data) : osmTemplate.getBBox(boundingBox);
 		ConverterContext context = new ConverterContext(osm, "highway", searchConfig);
 		return createDataResponse(context);
