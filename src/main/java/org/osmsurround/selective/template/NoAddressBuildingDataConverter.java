@@ -1,5 +1,7 @@
 package org.osmsurround.selective.template;
 
+import org.osm.schema.OsmNd;
+import org.osm.schema.OsmNode;
 import org.osm.schema.OsmTag;
 import org.osm.schema.OsmWay;
 import org.osmsurround.selective.data.SearchConfig;
@@ -32,8 +34,19 @@ public class NoAddressBuildingDataConverter extends BuildingDataConverter {
 			if (tag.getK().equals("highway")) {
 				isHighway = true;
 			}
-			if (tag.getK().equals("building") && !isGarage(tag.getV()))
-				return !hasValidAddress(osmWay.getTag());
+			if (tag.getK().equals("building") && !isGarage(tag.getV())) {
+				boolean wayHasAddress = hasValidAddress(osmWay.getTag());
+				if (wayHasAddress) {
+					return false;
+				}
+				for (OsmNd node : osmWay.getNd()) {
+					OsmNode wayNode = context.getNode(node.getRef());
+					if (hasValidAddress(wayNode.getTag())) {
+						return false;
+					}
+				}
+				return true;
+			}
 		}
 		if (isHighway && streetName != null) {
 			Set<String> streetNames = (Set<String>)context.getSupport().get("addr:street");

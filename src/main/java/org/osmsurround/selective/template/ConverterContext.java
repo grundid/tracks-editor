@@ -1,11 +1,5 @@
 package org.osmsurround.selective.template;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.geojson.GeoJsonObject;
 import org.geojson.LineString;
 import org.geojson.LngLatAlt;
@@ -15,6 +9,12 @@ import org.osm.schema.OsmNd;
 import org.osm.schema.OsmNode;
 import org.osm.schema.OsmWay;
 import org.osmsurround.selective.data.SearchConfig;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ConverterContext {
 
@@ -72,5 +72,9 @@ public class ConverterContext {
 
 	public void setSupport(String key, Object object) {
 		this.support.put(key, object);
+	}
+
+	public OsmNode getNode(BigInteger id) {
+		return nodes.get(id);
 	}
 }

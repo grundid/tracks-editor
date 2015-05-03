@@ -1,0 +1,36 @@
+<osm version="0.6" generator="CGImap 0.3.3 (11716 thorn-01.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+    <node id="2903126753" visible="true" version="3" changeset="29392096" timestamp="2015-03-10T19:59:58Z" user="Harald Hartmann" uid="92644" lat="50.5173650" lon="10.8697991">
+        <tag k="addr:city" v="Schönbrunn"/>
+        <tag k="addr:country" v="DE"/>
+        <tag k="addr:housenumber" v="2"/>
+        <tag k="addr:postcode" v="98667"/>
+        <tag k="addr:street" v="Schleusegasse"/>
+        <tag k="entrance" v="yes"/>
+    </node>
+    <node id="2780328840" lat="49.0851963" lon="9.2960935" version="3" timestamp="2010-12-06T10:20:28Z" changeset="6561230" uid="87062" user="AtomMapper"/>
+    <node id="2903126764" lat="49.0851963" lon="9.2960935" version="3" timestamp="2010-12-06T10:20:28Z" changeset="6561230" uid="87062" user="AtomMapper"/>
+    <node id="2903126763" lat="49.0851963" lon="9.2960935" version="3" timestamp="2010-12-06T10:20:28Z" changeset="6561230" uid="87062" user="AtomMapper"/>
+    <node id="2780328857" lat="49.0851963" lon="9.2960935" version="3" timestamp="2010-12-06T10:20:28Z" changeset="6561230" uid="87062" user="AtomMapper"/>
+    <node id="2780328875" lat="49.0851963" lon="9.2960935" version="3" timestamp="2010-12-06T10:20:28Z" changeset="6561230" uid="87062" user="AtomMapper"/>
+    <node id="3379515709" lat="49.0851963" lon="9.2960935" version="3" timestamp="2010-12-06T10:20:28Z" changeset="6561230" uid="87062" user="AtomMapper"/>
+    <node id="2780328867" lat="49.0851963" lon="9.2960935" version="3" timestamp="2010-12-06T10:20:28Z" changeset="6561230" uid="87062" user="AtomMapper"/>
+    <node id="2780328840" lat="49.0851963" lon="9.2960935" version="3" timestamp="2010-12-06T10:20:28Z" changeset="6561230" uid="87062" user="AtomMapper"/>
+
+    <way id="273144376" visible="true" version="5" changeset="29392096" timestamp="2015-03-10T19:59:58Z" user="Harald Hartmann" uid="92644">
+        <nd ref="2780328840"/>
+        <nd ref="2780328867"/>
+        <nd ref="3379515709"/>
+        <nd ref="2780328875"/>
+        <nd ref="2780328857"/>
+        <nd ref="2903126753"/>
+        <nd ref="2903126763"/>
+        <nd ref="2903126764"/>
+        <nd ref="2780328840"/>
+        <tag k="building" v="house"/>
+        <tag k="building:colour" v="white"/>
+        <tag k="building:levels" v="1"/>
+        <tag k="roof:colour" v="red"/>
+        <tag k="roof:material" v="roof_tiles"/>
+        <tag k="roof:shape" v="gabled"/>
+    </way>
+</osm>
