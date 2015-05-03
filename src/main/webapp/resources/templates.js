@@ -48,6 +48,55 @@ var templates = {
 			type : "text"
 		}
 	},
+	highway : {
+		sidewalk : {
+			label: "Sidewalk",
+			name: "sidewalk",
+			type: "select",
+			options: [{
+				value: ""
+			}, {
+				value: "yes"
+			}, {
+				value: "no"
+			}, {
+				value: "left"
+			}, {
+				value: "right"
+			}, {
+				value: "both"
+			}]
+		},
+		smoothness : {
+			label: "Smoothness",
+			name: "smoothness",
+			type: "select",
+			options: [{
+				value: ""
+			}, {
+				value: "excellent"
+			}, {
+				value: "good"
+			}, {
+				value: "intermediate"
+			}, {
+				value: "bad"
+			}, {
+				value: "very_bad"
+			}, {
+				value: "horrible"
+			}, {
+				value: "very_horrible"
+			}, {
+				value: "impassable"
+			}]
+		},
+		"incline" : {
+			label: "Incline",
+			name: "incline",
+			type: "text"
+		}
+	},
 	track : {
 		tracktype : {
 			label : "Tracktype",
